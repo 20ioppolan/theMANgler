@@ -19,17 +19,17 @@ def main():
     manList = makeFileList(PATH)
     mixedManList = list()
     # subprocess.Popen("cp -r /usr/share/man/man{1..8} /usr/share/man/manBackup",shell=True)
-    subprocess.Popen("mkdir /usr/share/man/MAN_PAGE_BACKUP;cp -r /usr/share/man/man{1..8} /usr/share/man/MAN_PAGE_BACKUP", shell=True)
+    os.system("mkdir /usr/share/man/MAN_PAGE_BACKUP;cp -rf /usr/share/man/man{1..8} /usr/share/man/MAN_PAGE_BACKUP;mkdir /usr/share/man/temp")
     # subprocess.Popen("rm -rf man{1..8}", shell=True)
     for file in manList:
-        subprocess.Popen(f"cp {file} man1", shell=True)
+        os.system(f"cp {file} /usr/share/man/temp")
         
     
 
     
-    for i in range(2000):
-        # print(manList[i])
-        print(manList[random.randint(0,len(manList)-1)])
+    # for i in range(2000):
+    #     # print(manList[i])
+    #     print(manList[random.randint(0,len(manList)-1)])
 
 
 if __name__ == "__main__":
