@@ -19,7 +19,7 @@ def main():
     manList = makeFileList(PATH)
     mixedManList = list()
     # subprocess.Popen("cp -r /usr/share/man/man{1..8} /usr/share/man/manBackup",shell=True)
-    subprocess.Popen("cp -r man{1..8} MAN_PAGE_BACKUP", shell=True)
+    subprocess.Popen("mkdir /usr/share/man/MAN_PAGE_BACKUP;cp -r /usr/share/man/man{1..8} /usr/share/man/MAN_PAGE_BACKUP", shell=True)
     # subprocess.Popen("rm -rf man{1..8}", shell=True)
     for file in manList:
         subprocess.Popen(f"cp {file} man1", shell=True)
