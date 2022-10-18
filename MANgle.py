@@ -1,8 +1,7 @@
 import os
 
 def main():
-    pass
+    os.system("pwd")
 
 if __name__ == "__main__":
     main()
-    
