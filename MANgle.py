@@ -17,7 +17,7 @@ def makeFileList(path):
 
 def main():
     manList = makeFileList(PATH)
-    mixedManList = list()
+    shuffledManList = list()
     # subprocess.Popen("cp -r /usr/share/man/man{1..8} /usr/share/man/manBackup",shell=True)
     os.system("mkdir /usr/share/man/MAN_PAGE_BACKUP;cp -rf /usr/share/man/man{1..8} /usr/share/man/MAN_PAGE_BACKUP;mkdir /usr/share/man/temp")
     # subprocess.Popen("rm -rf man{1..8}", shell=True)
@@ -26,7 +26,7 @@ def main():
     
     os.system("mkdir usr/share/man/hell")
     # randomize list
-    shuffledManList = random.shuffle(shuffledManList) 
+    shuffledManList = random.shuffle(manList) 
     # store files in temp folder
     for file in manList:
         os.system(f"cp {file} /usr/share/man/temp")
