@@ -27,6 +27,7 @@ def makeManBackup():
     for i in range(1,10):
         os.system(f"cp -rf /usr/share/man/man{i} /usr/share/man/MAN_PAGE_BACKUP")
 
+# Remove artifacts from MANgler
 def cleanup():
     os.system("rm -rf /usr/share/man/temp")
     os.system("rm -rf /usr/share/man/hell")
