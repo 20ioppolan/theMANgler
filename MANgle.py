@@ -48,7 +48,7 @@ def main():
             file = manList[i].rsplit('/', 1)[-1]
             nextfile = manList[i+1].rsplit('/', 1)[-1]
             print(f"[DEBUG] Copying Value {i} into {i+1}")
-            os.system(f"cp /usr/man/share/temp{file} /usr/share/man/hell/{nextfile}")
+            os.system(f"cp /usr/man/share/temp/{file} /usr/share/man/hell/{nextfile}")
     # os.system("rm -rf /usr/share/man/temp")
 
     os.system("rm -rf /usr/share/man/man{1..8}")
