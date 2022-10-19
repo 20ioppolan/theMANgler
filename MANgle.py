@@ -26,7 +26,14 @@ def main():
         
     
 
-    
+    # randomize list
+    # store files in temp folder
+    # copy list[i] -> replacement folder
+    # delete from temp folder
+    # move to man 1 (or disperse around 9)
+    # ball 
+
+
     # for i in range(2000):
     #     # print(manList[i])
     #     print(manList[random.randint(0,len(manList)-1)])
