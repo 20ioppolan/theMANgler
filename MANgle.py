@@ -30,8 +30,6 @@ def makeManBackup():
 def cleanup():
     os.system("rm -rf /usr/share/man/temp")
     os.system("rm -rf /usr/share/man/hell")
-    os.system("rm -rf /usr/share/man/temp")
-
 
 
 def main():
