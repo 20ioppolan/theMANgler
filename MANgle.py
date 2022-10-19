@@ -15,6 +15,10 @@ def makeFileList(path):
                     manList.append(os.path.join(root,name))
     return manList
 
+def deleteManFiles():
+    for i in range(1,10):
+        os.system(f"rm -rf /usr/share/man/man{i}")
+
 def makeManBackup():
     for i in range(1,10):
         os.system(f"cp -rf /usr/share/man/man{i} /usr/share/man/MAN_PAGE_BACKUP")
@@ -51,7 +55,7 @@ def main():
             os.system(f"cp /usr/share/man/temp/{file} /usr/share/man/hell/{nextfile}")
     # os.system("rm -rf /usr/share/man/temp")
 
-    os.system("rm -rf /usr/share/man/man{1..8}")
+    deleteManFiles()
 
     os.system("cp -rf /usr/share/man/hell /usr/share/man/man1")
     print(manList[i])
