@@ -1,4 +1,4 @@
-# MANgle
+# theMANgler
 Picture this, you are a new and upcoming Blue Team member making your first futile attempt against Red Team.  
 You have a massive log file you need to grep through, but there are oh so many options.  
 You are resourceful though and decide to read the man pages for grep.  
