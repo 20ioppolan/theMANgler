@@ -1,0 +1,25 @@
+---
+# general windows deploy 
+working_dir: 'C:\Temp\Working\Ansible'
+wallpaper_dir: 'C:\Wallpaper'
+iot_dir: 'C:\IoTDashboard'
+choco_server_source: "internal_repo"
+
+# windows_deploy_dns_server
+win_deploydnsserver_forwarders:
+  - "1.1.1.1"
+win_deploydnsserver_working_dir: "{{ working_dir }}"
+
+# windows_deploy_standards
+win_deploystandards_choco_server_source: "{{ choco_server_source }}"
+win_deploystandards_choco_server_url: "http://172.16.0.3/chocolatey"
+win_deploystandards_mgmt_dns: "172.16.0.1"
+win_deploystandards_working_dir: "{{ working_dir }}"
+
+# Ansible variables
+ansible_connection: psrp
+ansible_psrp_cert_validation: ignore
+ansible_psrp_protocol: https
+ansible_psrp_auth: ntlm
+ansible_psrp_credssp_auth_mechanism: ntlm
+ansible_become_method: runas

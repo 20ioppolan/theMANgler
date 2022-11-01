@@ -1,0 +1,267 @@
+# look into a subgroup for public vs private on host declerations
+all:
+  vars:
+    #default values for the variables
+    subbnet_ish: "PlaceHolder"
+    host_octets: "PlaceHolder"
+    team_number: "PlaceHolder"
+  children:
+    #Management
+    dns1:
+      vars:
+        ansible_host: "172.16.0.1"
+        host_octets: "1"
+      hosts:
+        dns1.seal.aq:
+    dns2:
+      vars:
+        ansible_host: "172.16.0.2"
+        host_octets: "2"
+      hosts:
+        dns2.seal.aq:
+    choco:
+      vars:
+        ansible_host: "172.16.0.3"
+        host_octets: "3"
+      hosts:
+        choco.seal.aq:
+    logging:
+      vars: 
+        ansible_host: "172.16.0.4"
+        host_octets: "4"
+      hosts:
+        logging.seal.aq:
+    deploy:
+      vars:
+        ansible_host: "172.16.0.5"
+        host_octets: "5"
+      hosts:
+        deploy.seal.aq:
+    scoring:
+      vars:
+        ansible_host: "172.16.0.6"
+        host_octets: "6"
+      hosts:
+        scoring.seal.aq:
+    beat:
+      vars:
+        ansible_host: "172.16.0.7"
+        host_octets: "7"
+      hosts:
+        beat.seal.aq:
+    store:
+      vars:
+        ansible_host: "172.16.0.8"
+        host_octets: "8"
+      hosts:
+        store.seal.aq:
+    vpn:
+      vars:
+        ansible_host: "172.24.0.16"
+        host_octets: "16"
+      hosts:
+        vpn.seal.aq:
+
+    #Team Hosts
+    ozone:
+      vars:
+        ansible_host: "10.{{ team_number|int }}.1.254"  
+        host_octets: "254"
+      hosts:
+        ozone.team[01:16].seal.aq:
+    squid:
+      vars:
+        ansible_host: "10.{{ team_number|int }}.1.1"  
+        host_octets: "1"
+      hosts:
+        squid.team[01:16].seal.aq:
+    penguin:
+      vars:
+        ansible_host: "10.{{ team_number|int }}.1.2"  
+        host_octets: "2"
+      hosts:
+        penguin.team[01:16].seal.aq:
+    sealion:
+      vars:
+        ansible_host: "10.{{ team_number|int }}.1.3"  
+        host_octets: "3"
+      hosts:
+        sealion.team[01:16].seal.aq:
+    albatross:
+      vars:
+        ansible_host: "10.{{ team_number|int }}.1.4"  
+        host_octets: "4"
+      hosts:
+        albatross.team[01:16].seal.aq:
+    orca:
+      vars:
+        ansible_host: "10.{{ team_number|int }}.1.5"  
+        host_octets: "5"
+      hosts:
+        orca.team[01:16].seal.aq:
+    whale:
+      vars:
+        ansible_host: "10.{{ team_number|int }}.1.6"  
+        host_octets: "6"
+      hosts:
+        whale.team[01:16].seal.aq:
+    pipeline:
+      vars:
+        ansible_host: "172.17.{{ team_number|int }}.1"  
+        host_octets: "1"
+      hosts:
+        pipeline.team[01:16].seal.aq:  
+    drill:
+      vars:
+        ansible_host: "172.17.{{ team_number|int }}.2"  
+        host_octets: "2"
+      hosts:
+        drill.team[01:16].seal.aq:
+    overwatch:
+      vars:
+        ansible_host: "172.17.{{ team_number|int }}.3"  
+        host_octets: "3"
+      hosts:
+        overwatch.team[01:16].seal.aq:
+    tank:
+      vars:
+        ansible_host: "172.17.{{ team_number|int }}.4"  
+        host_octets: "4"
+      hosts:
+        tank.team[01:16].seal.aq:
+    
+    # ----- Groups ------- 
+    
+    # Hosts that are Windows
+    windows: 
+      children:
+        #management
+        choco:
+        dns:
+          children:
+            dns1:
+            dns2:
+        #team
+        squid:
+        penguin:
+        sealion:
+        drill:
+        tank:
+    
+    # Hosts that are linux
+    linux:
+      children:
+        #management
+        vpn:
+        scoring:
+        beat:
+        store:
+        deploy:
+        game:
+        #team
+        albatross:
+        orca:
+        whale:
+        pipeline:
+        overwatch:
+
+    # team hosts group
+    team_hosts:
+      vars:
+        no_dns: False
+      children:
+        albatross:
+        orca:
+        whale:
+        pipeline:
+        overwatch:
+        squid:
+        penguin:
+        sealion:
+        drill:
+        tank:
+        ozone:
+        
+    # mgmt hosts group
+    mgmt_hosts:
+      vars:
+        no_dns: False
+      children:
+        choco:
+        dns:
+          children:
+            dns1:
+            dns2:
+        vpn:
+        logging:
+        scoring:
+        beat:
+        deploy:
+        store:
+    
+    # Hosts on the Cloud Network
+    cloud:
+      vars:
+        subbnet_ish: "172.16.{{ team_number|int }}."
+      children:
+        drill:
+        tank:
+        pipeline:
+        overwatch:
+    
+    lan:
+      vars:
+        subbnet_ish: "10.{{ team_number|int}}.1."
+      children:
+        squid:
+        penguin:
+        sealion:
+        albatross:
+        orca:
+        whale:
+        ozone:
+
+    # mgmt network group
+    deploy_mgmt:
+      vars:
+        subbnet_ish: "172.16.0."
+      children:
+        dns:
+          children:
+            dns1:
+            dns2:
+        choco:
+        logging:
+        deploy:
+        scoring:
+        beat:
+        store:
+    
+    # alt network group
+    alt_mgmt:
+      vars:
+        subbnet_ish: "172.24.0."
+        no_dns: False
+      children:
+        deploy:
+        scoring:
+        beat:
+        store:
+        vpn:
+        
+    # vpn network group
+    vpn_net: # rename to something better
+      vars:
+        subbnet_ish: "172.20.127."
+        no_dns: False
+      children:
+        vpn:
+
+    #router is weird
+    router:
+      children:
+        ozone:
+          vars:
+            ansible_host: "172.20.1.{{ team_number|int }}"
+            ip_routing_lan: "10.{{ team_number|int }}.1.254"
+

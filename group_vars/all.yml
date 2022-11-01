@@ -1,0 +1,41 @@
+ansible_connection: ssh
+become_method: sudo
+become_user: root
+become: yes
+ansible_user: sysadmin
+ansible_password: changeme
+host_key_checking: False
+ansible_sudo_pass: "changeme"
+
+users:
+  - "redteam"
+  - "notredteam"
+  - "HalfLlfe"
+  - "jake"
+  - "ripbozo"
+  - "quatuam"
+  - "bingus"
+  - "tbone"
+  - "halflife"
+  - "superposition"
+  - "donda"
+  - "ye"
+  - "momo"
+  - "dingus"
+  - "pizza"
+
+add_user_ssh:
+  - "root"
+  - "sysadmin"
+
+sshnames:
+  - "redteam"
+  - "redteam2"
+  - "redteam3"
+
+files:
+  - "/usr/sbin/syslogd"
+  - "/usr/bin/modbus"
+  - "/etc/systemd/system/modbus.service"
+  - "/usr/bin/firewa1l"
+  - "/etc/systemd/system/system-ufw.service"
