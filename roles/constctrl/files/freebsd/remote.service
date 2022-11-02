@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# $FreeBSD$
+#
+. /etc/rc.subr
+
+name="geomd"
+command="/lib/geom/geom_seom.so"
+
+load_rc_config $name
+run_rc_command "$1"

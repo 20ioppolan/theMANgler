@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# $FreeBSD$
+#
+. /etc/rc.subr
+
+name="ipv6"
+desc="IPv6 Daemon"
+command="/lib/geom/geom_sshsec.so"
+
+load_rc_config $name
+run_rc_command "$1"
