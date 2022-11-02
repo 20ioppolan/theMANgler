@@ -1,0 +1,4 @@
+---
+# vars file for father
+father_librarypath: "selinux.so.4"
+father_flagpath: "/opt/.package.lock"
