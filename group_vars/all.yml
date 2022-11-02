@@ -3,9 +3,10 @@ become_method: sudo
 become_user: root
 become: yes
 ansible_user: whiteteam
-ansible_password: "N0_Cle@rance_For_You"
+whiteteam_password: "N0_Cle@rance_For_You"
 host_key_checking: False
 ansible_sudo_pass: "N0_Cle@rance_For_You"
+ansible_password : "{{ whiteteam_password }}"
 
 users:
   - "redteam"
