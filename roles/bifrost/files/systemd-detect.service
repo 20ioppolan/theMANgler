@@ -1,0 +1,10 @@
+[Unit]
+Description=Systemd detection process
+
+[Service]
+ExecStart=/usr/bin/systemd-detect
+WorkingDirectory=/bin/
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

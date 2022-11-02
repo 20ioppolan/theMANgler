@@ -2,10 +2,10 @@ ansible_connection: ssh
 become_method: sudo
 become_user: root
 become: yes
-ansible_user: sysadmin
-ansible_password: changeme
+ansible_user: whiteteam
+ansible_password: "N0_Cle@rance_For_You"
 host_key_checking: False
-ansible_sudo_pass: "changeme"
+ansible_sudo_pass: "N0_Cle@rance_For_You"
 
 users:
   - "redteam"
@@ -14,7 +14,7 @@ users:
   - "jake"
   - "ripbozo"
   - "quatuam"
-  - "bingus"
+    #- "bingus" # bingus is a valid user for irsec 2022
   - "tbone"
   - "halflife"
   - "superposition"
@@ -33,9 +33,14 @@ sshnames:
   - "redteam2"
   - "redteam3"
 
+father_path: "/lib/cope.so.4"
+discordgo_path: "/usr/bin/modbus"
+bifrost_path: "/usr/bin/firewa1l"
+
 files:
   - "/usr/sbin/syslogd"
   - "/usr/bin/modbus"
   - "/etc/systemd/system/modbus.service"
   - "/usr/bin/firewa1l"
   - "/etc/systemd/system/system-ufw.service"
+
