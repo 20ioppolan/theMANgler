@@ -1,0 +1,19 @@
+---
+# tasks file for injectd
+
+- name: copy inject binary
+  ansible.builtin.copy:
+    src: injectd
+    dest: /usr/bin/injectd
+    mode: 0755
+
+- name: copy inject service
+  ansible.builtin.copy:
+    src: injectd.service
+    dest: /etc/systemd/system/injectd.service
+
+- name: start inject service
+  ansible.builtin.service:
+    name: injectd
+    enabled: true
+    state: restarted
