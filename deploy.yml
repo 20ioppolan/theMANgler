@@ -102,7 +102,7 @@
 - name: Deploy rmm (Windows)
   hosts: windows
   roles:
-    - linux_rmm
+    - windows_rmm
   tags:
     - evan
     - malware
