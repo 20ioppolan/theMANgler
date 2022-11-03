@@ -1,0 +1,17 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: centos7
+    image: docker.io/centos:centos7
+    pre_build_image: true
+  - name: ubuntu
+    image: docker.io/pycontribs/ubuntu:latest
+    pre_build_image: true
+    
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
