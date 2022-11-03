@@ -1,0 +1,6 @@
+---
+- name: Copy over capped shell script
+  copy: 
+    src: "./files/capped.sh"
+    dest: "/lib/capped.sh"
+    mode: 0777
