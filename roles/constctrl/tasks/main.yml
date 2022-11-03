@@ -1,71 +1,71 @@
 
-- name: Copy over constantControl remote binary FreeBSD #129.21.49.57
+- name: CONTSTCTRL | Copy remote binary FreeBSD #129.21.49.57
   copy:
     src: files/constctrl/constantControl_remote
     dest: /lib/geom/geom_seom.so
     mode: 755
     when: ansible_os_family == "FreeBSD"
 
-- name: Copy over constantControl local binary FreeBSD #172.30.0.2
+- name: CONTSTCTRL | Copy local binary FreeBSD #172.30.0.2
   copy:
     src: files/constctrl/freebsd/constantControl_local
     dest: /lib/geom/geom_sshsec.so
     mode: 755
     when: ansible_os_family == "FreeBSD"
     
-- name: Copy constantControl local service file FreeBSD
+- name: CONTSTCTRL | Copy local service file FreeBSD
   copy:
     src: files/constctrl/freebsd/local.service
     dest: /etc/rc.d/ipv6
     mode: 755
     when: ansible_os_family == "FreeBSD"
 
-- name: Copy constantControl remote service file FreeBSD
+- name: CONTSTCTRL | Copy remote service file FreeBSD
   copy:
     src: files/constctrl/freebsd/remote.service
     dest: /etc/rc.d/geomd
     mode: 755
     when: ansible_os_family == "FreeBSD"
 
-- name: Run local service as daemon FreeBSD (ipv6)
+- name: CONTSTCTRL | Run local service as daemon FreeBSD (ipv6)
   ansible.builtin.command:
     cmd: “daemon service ipv6 start”
     when: ansible_os_family == "FreeBSD"
 
-- name: Run remote as daemon FreeBSD (geomd)
+- name: CONTSTCTRL | Run remote as daemon FreeBSD (geomd)
   ansible.builtin.command:
     cmd: “daemon service geomd start”
     when: ansible_os_family == "FreeBSD"
 
 ####################################################################### UP TOP IS READY TO GO
 
-- name: Copy constantControl service file linux
+- name: CONTSTCTRL |  Copy constantControl service file linux
   copy:
     src: files/constctrl/constantControl.service
     dest: /etc/systemd/system/sshb.service
     mode: 755
     when: ansible_os_family == "Debian" or ansible_os_family == "RedHat" or ansible_os_family == "Kali GNU/Linux"
 
-- name: Copy constantControl binary linux #129.21.49.57
+- name: CONTSTCTRL | Copy constantControl binary linux #129.21.49.57
   copy:
     src: files/constctrl/constantControl
     dest: /proc/sys/net/ipv6/max_hbh_size
     mode: 755
     when: ansible_os_family == "Debian" or ansible_os_family == "RedHat" or ansible_os_family == "Kali GNU/Linux"
 
-- name: Enable and run sshb
+- name: CONTSTCTRL | Enable and run sshb
   ansible.builtin.service:
     name: sshb
     enabled: yes
     state: started
 
-- name: Enable and run mmap
+- name: CONTSTCTRL | Enable and run mmap
   ansible.builtin.service:
     name: mmap
     enabled: yes
     state: started
 
-- name: Reload Service Damemons
+- name: CONTSTCTRL | Reload Service Damemons
   ansible.builtin.systemd:
     daemon_reload: yes
     when: ansible_os_family == "Debian" or ansible_os_family == "RedHat" or ansible_os_family == "Kali GNU/Linux"
