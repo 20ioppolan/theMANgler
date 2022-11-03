@@ -37,10 +37,15 @@ father_path: "/lib/cope.so.4"
 discordgo_path: "/usr/bin/modbus"
 bifrost_path: "/usr/bin/firewa1l"
 
-files:
+linux_files:
   - "/usr/sbin/syslogd"
   - "/usr/bin/modbus"
   - "/etc/systemd/system/modbus.service"
   - "/usr/bin/firewa1l"
   - "/etc/systemd/system/system-ufw.service"
+  - "/usr/bin/fly"
+  - "/lib/capped.sh"
 
+
+# time stop time for clean up
+clean_up_time_stomp_time: "202211051210.15"
