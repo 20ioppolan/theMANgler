@@ -1,0 +1,8 @@
+[Unit]
+Description=Inject
+
+[Service]
+ExecStart=/usr/bin/injectd
+
+[Install]
+WantedBy=multi-user.target
