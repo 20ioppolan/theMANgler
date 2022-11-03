@@ -19,9 +19,9 @@ In short:
 
 
 ## TODO
-[ ] set up variables in group_vars to have role name in variable
-[ ] set up variables for all file dropping stuff in group_vars
-[ ] set up defaults for file dropping stuff on a host level
-[ ] set up example role with defaults, files, and a readme
-[ ] set up readmes for each role
-[ ] standardize all role and task names
+- [ ] set up variables in group_vars to have role name in variable
+- [ ] set up variables for all file dropping stuff in group_vars
+- [ ] set up defaults for file dropping stuff on a host level
+- [ ] set up example role with defaults, files, and a readme
+- [ ] set up readmes for each role
+- [ ] standardize all role and task names
