@@ -1,2 +1,17 @@
 ---
 # vars file for bifrost
+# Binary Locations
+bifrost_windows_location: "C:\\ProgramData\\systemdll.exe"
+bifrost_linux_location: "/usr/bin/systemd-detect"
+bifrost_freebsd_location: "/usr/bin/systemd-journal"
+# Binaries
+bifrost_linux_binary: "systemd-detect"
+bifrost_freebsd_binary: "valkyrae"
+bifrost_windows_binary: "systemdll.exe"
+bifrost_pi_binary: "systemd-gpio"
+# Service Locations
+bifrost_linux_service_location: "/etc/systemd/system/systemd-detect.service"
+bifrost_freebsd_service_location: "/usr/local/etc/rc.d/systemd-journal.sh"
+# Services
+bifrost_linux_service: "systemd-detect.service"
+bifrost_freebsd_service: "systemd-journal.sh"
