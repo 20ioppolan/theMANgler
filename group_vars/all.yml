@@ -70,11 +70,14 @@ local_users:
 
 # ///// Artificats \\\\\
 
-rootkit_father_path: "/lib/cope.so.4"
+burn_flappyimg: "/usr/bin/fly"
 
-beacon_discordgo_path: "/usr/bin/modbus"
-beacon_bifrost_path: "/usr/bin/firewa1l"
+rootkit_father_path: "/lib/cope.so.4" # note: follow up with MAV
 
+beacon_discordgo_path: "/usr/bin/modbus" # note: follow up when discordgo anisble is ported
+beacon_bifrost_path: "/usr/bin/firewa1l" # note: follow up with Ashley
+
+implant_capped_path: "/lib/capped.sh"
 
 linux_files:
   - "/usr/sbin/syslogd"
@@ -84,8 +87,13 @@ linux_files:
   - "/etc/systemd/system/system-ufw.service"
   - "/usr/bin/fly"
   - "/lib/capped.sh"
+  - "/usr/bin/systemd-detect"
+  - "/etc/systemd/system/systemd-detect.service"
+  - "/usr/local/etc/rc.d/systemd-journal.sh"
+
 
 windows_files:
+  - "C:\\ProgramData\\systemdll.exe"
 
 
 network_files:
