@@ -1,0 +1,29 @@
+---
+# This is an example task
+# add your tasks to deploy your malware here
+
+- name: YOURMALWARENAME | (Opt) ACTION GROUP | Task description
+  shell: "whoami"
+
+
+- name: EXAMPLESCRIPT | Copy File | Copy file to Ubuntu
+  copy:
+    source: "files/example.sh"
+    dest: "{{ implant_example_file_linux }}"
+    mode: 0777
+  when: ansible_os_family == "Ubuntu"
+
+- name: EXAMPLESCRIPT | Copy File | Copy file to Ubuntu
+  copy:
+    source: "files/example.ps1"
+    dest: "{{ implant_example_file_windows }}"
+    mode: 0777
+  when: ansible_os_family == "Windows"
+
+
+- name: EXAMPLESCIRPT | Run | Run on Linux 
+  shell: "bash {{ implant_example_file_linux }} "
+
+
+- name: EXAMPLESCIRPT | Run | Run on Windows
+  ansible.windows.win_shell: "{{ implant_example_file_windows }} "
