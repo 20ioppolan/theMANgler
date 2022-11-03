@@ -1,9 +1,9 @@
 ---
-- name: Copy Training Wheel script
+- name: TRAINING WHEELS | Copy Training Wheel script
   copy:
     src: 'trainingwheels.sh'
     dest: /tmp/tw.sh
     mode: 755
 
-- name: Run that shit
+- name: TRAINING WHEELS | Run training wheels
   shell: bash /tmp/tw.sh
