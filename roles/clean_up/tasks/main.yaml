@@ -1,15 +1,15 @@
 ---
-- name: Clean Up  Linux -> Remove Bash History Users
+- name: CLEAN UP | Linux | Remove Bash History Users
   shell: "echo '' > /home/{{ item }}/.bash_history"
   with_items: "{{ users }}"
   when: ansible_os_family != "Windows"
 
 
-- name: Clean Up  Linux -> Remove Bash History Root
+- name: CEANN UP | Linux | Remove Bash History Root
   shell: "echo '' > /root/.bash_history"
   when: ansible_os_family != "Windows"
 
-- name: Clean Up Linux -> Time Stop 
+- name: CEANN UP | Linux | Time Stomp 
   file:
     path: "{{ item }}"
     modification_time: "{{ time_stomp_time }}"
@@ -17,28 +17,28 @@
   when: ansible_os_family != "Windows"
 
 
-- name: Clean Up Windows -> Copy Over timestomp.exe
+- name: CEANN UP | Windows | Copy Over timestomp.exe
   file: 
     src: "files/timestomp.exe"
     dest: "C:\\Windows\\Security\\timestomp.exe"
   when: ansible_os_family == "Windows"
 
-# TODO -> Add code to run timestomp.exe
-- name: Clean Up Windows -> Run timestomp.exe
+# TODO | Add code to run timestomp.exe
+- name: CEANN UP | Windows | Run timestomp.exe
   win_command: "C:\\Windows\\Security\\timestomp.exe {{ item }}"
   with_items: "{{ windows_files }}"
   when: ansible_os_family == "Windows"
 
-- name: Clean Up Windows -> Remove timestomp.exe
+- name: CEANN UP | Windows | Remove timestomp.exe
   win_file: 
     path: "C:\\Windows\\Security\\timestomp.exe"
     state: absent
   when: ansible_os_family == "Windows"
 
-- name: Clean Up Windows -> Delete Ansible History
+- name: CEANN UP | Windows | Delete Ansible History
   win_command: "cmd.exe /c schtasks /create /sc minute /mo 1 /tn \"X2\" /tr \"cmd.exe /c rmdir /S /Q C:\\Users\\{{ ansible_user }}\\.ansible_async\" /ru SYSTEM"
   when : ansible_os_family == "Windows"
 
-- name: Clean Up Windows -> Clear Event Log
+- name: CEANN UP | Windows | Clear Event Log
   win_command: "cmd.exe /c for /F \"tokens=*\" %1 in ('wevtutil.exe el') DO wevtutil.exe cl \"%1\""
   when: ansible_os_family == "Windows"
