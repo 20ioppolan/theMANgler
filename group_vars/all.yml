@@ -1,12 +1,5 @@
-ansible_connection: ssh
-become_method: sudo
-become_user: root
-become: yes
-ansible_user: whiteteam
-whiteteam_password: "N0_Cle@rance_For_You"
-host_key_checking: False
-ansible_sudo_pass: "N0_Cle@rance_For_You"
-ansible_password : "{{ whiteteam_password }}"
+---
+ansible_password: "Change.me!2022"
 
 users:
   - "redteam"

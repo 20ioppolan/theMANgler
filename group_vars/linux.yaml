@@ -3,5 +3,7 @@
 host_key_checking: False
 ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
 
-ansible_sudo_pass: "{{ whiteteam_password }}"
+ansible_user: rigmanager
+ansible_password: "Change.me!2022"
+ansible_sudo_pass: "{{ ansible_password }}"
 ansible_become: yes
