@@ -1,0 +1,5 @@
+---
+- name: Copy floppy to /usr/bin
+  copy:
+    src: './files/floppybird.img'
+    dest: /usr/bin/fly
