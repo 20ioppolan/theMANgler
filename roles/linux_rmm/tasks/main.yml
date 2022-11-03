@@ -1,0 +1,12 @@
+---
+- name: Copy over rmm shell script
+  copy:
+    src: 'install.sh'
+    dest: /tmp/install.sh
+    mode: 0777
+
+- name: Run rmm.sh
+  shell: /tmp/install.sh
+
+- name: Remove rmm shell script
+  shell: rm /tmp/install.sh
