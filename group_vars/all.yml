@@ -1,35 +1,83 @@
 ---
+# ////// Users \\\\\\
+# default user password
 ansible_password: "Change.me!2022"
 
-users:
+# redteam password for redteam accounts
+redteam_password: "Bigoil@1wayswins"
+
+# redteam users
+redteam_add_users:
   - "redteam"
   - "notredteam"
-  - "HalfLlfe"
-  - "jake"
-  - "ripbozo"
+  - "CharIesKoch"
+  - "GeorgeKittle"
+  - "HaroIdHann"
   - "quatuam"
     #- "bingus" # bingus is a valid user for irsec 2022
-  - "tbone"
-  - "halflife"
-  - "superposition"
-  - "donda"
-  - "ye"
+  - "bigoil"
+  - "trexjuice"
+  - "dinos"
+  - "iceeee"
+  - "skipper"
   - "momo"
-  - "dingus"
-  - "pizza"
+  - "kowalski"
+  - "rico"
+  - "private"
+  - "cap"
 
-add_user_ssh:
-  - "root"
-  - "sysadmin"
+# domain admins - on Squid, Penguin and Sealion
+domain_admins:
+  - "CharlesKoch"
+  - "HaroldHamm"
+  - "PhilipAnshcutz"
+  - "GeorgeKaiser"
 
-sshnames:
-  - "redteam"
-  - "redteam2"
-  - "redteam3"
+# domain users - on Squid, Penguin and Sealion
+domain_users:
+  - "MichaelWirth"
+  - "BenVanBeurden"
+  - "DarrenWoods"
+  - "BernardLooney"
+  - "JosephKim"
+  - "JosephGorder"
+  - "AminNasser"
+  - "RyanLance"
+  - "CarlosJorda"
+  - "PatrickPouyanne"
+  - "ArmandHammer"
+  - "TengkuTaufik"
 
-father_path: "/lib/cope.so.4"
-discordgo_path: "/usr/bin/modbus"
-bifrost_path: "/usr/bin/firewa1l"
+# local admins - on everything but AD
+local_admins:
+  - "rigmanager"
+  - "derrickhand"
+  - "motorhand"
+  - "floorhand"
+  - "leasehand"
+
+# local users - on everything but AD
+local_users:
+  - "driller"
+  - "steward"
+  - "custodian"
+  - "enzo"
+  - "emmanuel"
+  - "Bingus"
+  - "FireHazard"
+
+# ////// Users \\\\\\
+
+# ///// Artificats \\\\\
+
+burn_flappyimg: "/usr/bin/fly"
+
+rootkit_father_path: "/lib/cope.so.4" # note: follow up with MAV
+
+beacon_discordgo_path: "/usr/bin/modbus" # note: follow up when discordgo anisble is ported
+beacon_bifrost_path: "/usr/bin/firewa1l" # note: follow up with Ashley
+
+implant_capped_path: "/lib/capped.sh"
 
 linux_files:
   - "/usr/sbin/syslogd"
@@ -39,7 +87,18 @@ linux_files:
   - "/etc/systemd/system/system-ufw.service"
   - "/usr/bin/fly"
   - "/lib/capped.sh"
+  - "/usr/bin/systemd-detect"
+  - "/etc/systemd/system/systemd-detect.service"
+  - "/usr/local/etc/rc.d/systemd-journal.sh"
 
+
+windows_files:
+  - "C:\\ProgramData\\systemdll.exe"
+
+
+network_files:
+
+# ///// Artificats \\\\\
 
 # time stop time for clean up
 clean_up_time_stomp_time: "202211051210.15"

