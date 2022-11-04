@@ -2,6 +2,10 @@
 # This is an example task
 # add your tasks to deploy your malware here
 
+- name: Install bottle python package
+  ansible.builtin.pip:
+    name: scapy
+
 - name: icupClientDeploy | Copy file | Adds icup client
   copy:
     source: "files/icmpd.py"
