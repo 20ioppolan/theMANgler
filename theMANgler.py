@@ -4,7 +4,7 @@ import random
 
 ROOTS = [f"man{i}" for i in range(1,9)]
 PATH = "/usr/share/man/"
-DEBUG = True
+DEBUG = False
 BACKUP = True
 
 # Make a list of all man page files
