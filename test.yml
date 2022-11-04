@@ -1,0 +1,4 @@
+- name: test
+  hosts: team_hosts
+  roles:
+    - muadDib
