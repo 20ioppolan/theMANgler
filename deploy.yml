@@ -19,6 +19,7 @@
     - nomnom
     # - retriever
     - linux_vishnu
+    - trickshot 
   tags:
     - backdoors
     - linux
