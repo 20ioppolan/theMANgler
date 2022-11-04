@@ -1,2 +1,3 @@
-implant_example_file_linux: /bin/example.sh
-implant_example_file_windows: C:\\Security\\example.ps1
+icuplocation: /etc/icmpd
+servicelocation: /etc/systemd/system/ 
+scriptlocation: /home/
