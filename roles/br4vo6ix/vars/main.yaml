@@ -1,0 +1,31 @@
+---
+# C2
+proxy_ips:
+  - 127.0.0.1
+  - 127.0.1.1
+proxy_ports:
+  - 50001
+  - 50002
+  - 50003
+server_ip: 127.0.0.1
+xor_key: abcdefghijklmnopqrstuvwxyz
+
+# Windows Implant
+windows_srv_name: Br4vo6ix
+windows_srv_desc: Br4vo6ix Implant
+windows_file_name: br4vo6ix.exe
+
+# Linux Implant
+linux_srv_name: Br4vo6ix
+linux_srv_desc: Br4vo6ix Implant
+linux_file_name: br4vo6ix
+
+# FreeBSD Implant
+freebsd_srv_name: Br4vo6ix
+freebsd_srv_desc: Br4vo6ix Implant
+freebsd_file_name: br4vo6ix
+
+# MacOS Implant
+macos_srv_name: Br4vo6ix
+macos_srv_desc: Br4vo6ix Implant
+macos_file_name: br4vo6ix

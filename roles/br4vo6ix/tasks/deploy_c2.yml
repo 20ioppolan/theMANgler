@@ -1,0 +1,46 @@
+---
+# Thesee tasks deploy the Br4vo6ix C2
+
+- name: Br4vo6ix | C2
+  hosts: "{{ server_ip }}"
+  block:
+    - name: Br4vo6ix | C2 | Copy server binary
+      ansible.builtin.copy:
+        src: br4vo6ix/out/server/server
+        dest: br4vo6ix
+
+    - name: Br4vo6ix | C2 | Make quick-start script
+      ansible.builtin.template:
+        src: run-c2.sh
+        dest: run-c2.sh
+
+    - name: Install nginx
+      ansible.builtin.package:
+        name: nginx
+        state: present
+
+    - name: Copy website Nginx config
+      ansible.builtin.template:
+        src: nginx.conf
+        dest: /etc/nginx/sites-available/default
+        mode: 0644
+      notify:
+        - Restart nginx
+
+    - name: Enable nginx
+      ansible.builtin.service:
+        name: nginx
+        enabled: yes
+
+- name: EXAMPLESCRIPT | Copy File | Copy file to Ubuntu
+  copy:
+    source: "files/example.ps1"
+    dest: "{{ implant_example_file_windows }}"
+    mode: 0777
+  when: ansible_os_family == "Windows"
+
+- name: EXAMPLESCIRPT | Run | Run on Linux
+  shell: "bash {{ implant_example_file_linux }} "
+
+- name: EXAMPLESCIRPT | Run | Run on Windows
+  ansible.windows.win_shell: "{{ implant_example_file_windows }} "

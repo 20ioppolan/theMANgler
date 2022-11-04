@@ -1,0 +1,5 @@
+---
+# This role deploys Br4vo6ix
+
+- name: Br4vo6ix | Compile
+  include_tasks: compile.yml
