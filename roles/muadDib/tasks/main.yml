@@ -1,0 +1,34 @@
+--- 
+- name: Get Kernel Version (OS -- EXAMPLE)
+  ansible.builtin.shell: uname -r
+  register: kernel_ver
+  when: (inventory_hostname_short == 'albatross') or
+        (inventory_hostname_short == 'orca') 
+
+- name: Copy ko - Arch
+  become: true
+  ansible.builtin.copy: 
+    src: files/arch/muadDib.ko
+    dest: /lib/modules/{{ kernel_ver.stdout }}/kernel/drivers/MUADDIB_muadDib.ko
+  when: inventory_hostname_short == 'albatross'
+    
+- name: Copy ko - Rocky
+  become: true
+  ansible.builtin.copy:
+    src: files/rocky/muadDib.ko
+    dest: /lib/modules/{{ kernel_ver.stdout }}/kernel/drivers/MUADDIB_muadDib.ko
+  when: inventory_hostname_short == 'orca'
+
+- name: Persist
+  become: true
+  ansible.builtin.shell: echo MUADDIB_muadDib >> /etc/modules
+  ansible.builtin.shell: depmod
+  when: (inventory_hostname_short == 'albatross') or
+        (inventory_hostname_short == 'orca') 
+
+- name: Load
+  become: true
+  shell: insmod /lib/modules/{{ kenrel_ver.stdout }}/kernel/drivers/MUADDIB_muadDib.ko
+  when: (inventory_hostname_short == 'albatross') or 
+        (inventory_hostname_short == 'orca')
+
