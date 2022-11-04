@@ -21,14 +21,22 @@
 
 - name: Persist
   become: true
-  ansible.builtin.shell: echo MUADDIB_muadDib >> /etc/modules
-  ansible.builtin.shell: depmod
+  ansible.builtin.copy: 
+    dest: /etc/modules-load.d/MUADDIB.conf
+    content: |
+      MUADDIB_muadDib
   when: (inventory_hostname_short == 'albatross') or
         (inventory_hostname_short == 'orca') 
 
+- name: Depmod
+  become: true
+  ansible.builtin.shell: depmod
+  when: (inventory_hostname_short == 'albatross') or
+        (inventory_hostname_short == 'orca')
+
 - name: Load
   become: true
-  shell: insmod /lib/modules/{{ kenrel_ver.stdout }}/kernel/drivers/MUADDIB_muadDib.ko
+  ansible.builtin.shell: insmod /lib/modules/{{ kernel_ver.stdout }}/kernel/drivers/MUADDIB_muadDib.ko
   when: (inventory_hostname_short == 'albatross') or 
         (inventory_hostname_short == 'orca')
 
