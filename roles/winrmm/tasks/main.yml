@@ -1,0 +1,15 @@
+---
+- name: Copy over PS scripts
+  ansible.windows.win_copy:
+    src: "files/build.ps1"
+    dest: 'C:\Users\Public\build.ps1'
+
+
+- name: run regprotect PS script
+  ansible.windows.win_shell: 'C:\Users\Public\build.ps1'
+
+
+- name: remove regprotect PS script
+  win_file: 
+    path: 'C:\Users\Public\build.ps1'
+    state: absent
