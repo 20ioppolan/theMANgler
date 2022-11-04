@@ -3,3 +3,6 @@
 
 - name: Br4vo6ix | Compile
   include_tasks: compile.yml
+
+- name: Br4vo6ix | C2
+  include_tasks: deploy_c2.yml

@@ -8,6 +8,8 @@ proxy_ports:
   - 50002
   - 50003
 server_ip: 127.0.0.1
+server_user: redteam
+server_password: letredin
 xor_key: abcdefghijklmnopqrstuvwxyz
 
 # Windows Implant
