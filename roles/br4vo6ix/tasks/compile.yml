@@ -53,6 +53,7 @@
       community.docker.docker_image:
         name: br4vo6ix
         source: build
+        force_source: true
         build:
           path: "{{ role_path }}/files/br4vo6ix"
 
@@ -69,6 +70,7 @@
       community.docker.docker_image:
         name: br4vo6ix-ui
         source: build
+        force_source: true
         build:
           path: "{{ role_path }}/files/br4vo6ix"
           dockerfile: "./frontend/Dockerfile"

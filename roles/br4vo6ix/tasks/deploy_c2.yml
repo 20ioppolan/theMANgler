@@ -2,8 +2,8 @@
 # Thesee tasks deploy the Br4vo6ix C2
 
 - name: Br4vo6ix | C2
-  hosts: "{{ server_ip }}"
   vars:
+    ansible_host: "{{ server_ip }}"
     ansible_user: "{{ server_user }}"
     ansible_password: "{{ server_password }}"
     ansible_become_password: "{{ server_password }}"
@@ -27,7 +27,7 @@
     - name: Br4vo6ix | C2 | Copy frontend files
       ansible.builtin.copy:
         src: br4vo6ix/frontend/build
-        dest: /br4vo6ix/build
+        dest: /br4vo6ix
         mode: 0444
 
     - name: Br4vo6ix | C2 | Install nginx

@@ -3,6 +3,12 @@
 
 - name: Br4vo6ix | Compile
   include_tasks: compile.yml
+  when: br4vo6ix_compile
 
 - name: Br4vo6ix | C2
   include_tasks: deploy_c2.yml
+  when: br4vo6ix_c2_install
+
+- name: Br4vo6ix | Implant
+  include_tasks: deploy_implant.yml
+  when: br4vo6ix_implant_install

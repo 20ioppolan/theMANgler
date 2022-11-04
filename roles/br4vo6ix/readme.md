@@ -58,3 +58,36 @@ macos_srv_name: Br4vo6ix
 macos_srv_desc: Br4vo6ix Implant
 macos_file_name: br4vo6ix
 ```
+
+## Playbooks
+
+Here is the recommended playbook plays for Br4vo6ix:
+
+```yml
+- name: Br4vo6ix | Compile
+  hosts: localhost
+  roles:
+    - role: br4vo6ix
+      br4vo6ix_compile: true
+  tags:
+    - br4vo6ix
+    - compile
+
+- name: Br4vo6ix | C2
+  hosts: redteam:&172.20.1.101
+  roles:
+    - role: br4vo6ix
+      br4vo6ix_c2_install: true
+  tags:
+    - br4vo6ix
+    - c2
+
+- name: Br4vo6ix | C2
+  hosts: team_hosts
+  roles:
+    - role: br4vo6ix
+      br4vo6ix_implant_install: true
+  tags:
+    - br4vo6ix
+    - implant
+```
