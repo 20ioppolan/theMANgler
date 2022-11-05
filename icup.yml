@@ -1,0 +1,6 @@
+- name: icup
+  hosts: orca:albatross
+  roles:
+    - icup
+  tags:
+    - icup
