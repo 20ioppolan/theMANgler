@@ -1,0 +1,17 @@
+---
+- name: Install Dependencies Pipeline
+  hosts: pipeline
+  become: yes
+  tasks:
+    - name: install wget
+      shell: pkg install -y wget 
+
+- name: Deploy tactical
+  hosts: team_hosts:!overwatch:!ozone:!penguin
+  debugger: on_failed
+  roles:
+    - tacticalrmm
+  tags:
+    - evan
+    - malware
+    - rmm
