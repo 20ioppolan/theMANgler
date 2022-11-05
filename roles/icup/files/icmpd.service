@@ -1,12 +1,12 @@
 [Unit]
-Description=ICMP service.
+Description=ICMP service
 
 [Install]
 WantedBy=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/etc/icmp
+ExecStart=/etc/icmpd
 WorkingDirectory=/etc/
 Restart=always
 RestartSec=5
