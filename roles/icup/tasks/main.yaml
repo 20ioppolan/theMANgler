@@ -29,8 +29,8 @@
 
 - name: RunScript | Run | Run on Linux 
   shell: "./home/icmpd.sh"
-when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
+  when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
 
 - name: DeleteScript | Run | Run on Linux 
   shell: "./home/icmpd.sh"
-when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
+  when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
