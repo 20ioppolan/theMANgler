@@ -26,7 +26,7 @@ all:
       hosts:
         choco.seal.aq:
     logging:
-      vars: 
+      vars:
         ansible_host: "172.16.0.4"
         host_octets: "4"
       hosts:
@@ -65,75 +65,78 @@ all:
     #Team Hosts
     ozone:
       vars:
-        ansible_host: "10.{{ team_number|int }}.1.254"  
+        ansible_host: "10.{{ team_number|int }}.1.254"
         host_octets: "254"
       hosts:
         ozone.team[01:16].seal.aq:
     squid:
       vars:
-        ansible_host: "10.{{ team_number|int }}.1.1"  
+        ansible_host: "10.{{ team_number|int }}.1.1"
         host_octets: "1"
       hosts:
         squid.team[01:16].seal.aq:
     penguin:
       vars:
-        ansible_host: "10.{{ team_number|int }}.1.2"  
+        ansible_host: "10.{{ team_number|int }}.1.2"
         host_octets: "2"
       hosts:
         penguin.team[01:16].seal.aq:
     sealion:
       vars:
-        ansible_host: "10.{{ team_number|int }}.1.3"  
+        ansible_host: "10.{{ team_number|int }}.1.3"
         host_octets: "3"
       hosts:
         sealion.team[01:16].seal.aq:
     albatross:
       vars:
-        ansible_host: "10.{{ team_number|int }}.1.4"  
+        ansible_host: "10.{{ team_number|int }}.1.4"
         host_octets: "4"
       hosts:
         albatross.team[01:16].seal.aq:
     orca:
       vars:
-        ansible_host: "10.{{ team_number|int }}.1.5"  
+        ansible_host: "10.{{ team_number|int }}.1.5"
         host_octets: "5"
       hosts:
         orca.team[01:16].seal.aq:
     whale:
       vars:
-        ansible_host: "10.{{ team_number|int }}.1.6"  
+        ansible_host: "10.{{ team_number|int }}.1.6"
         host_octets: "6"
       hosts:
         whale.team[01:16].seal.aq:
     pipeline:
       vars:
-        ansible_host: "172.17.{{ team_number|int }}.1"  
+        ansible_host: "172.17.{{ team_number|int }}.1"
         host_octets: "1"
       hosts:
-        pipeline.team[01:16].seal.aq:  
+        pipeline.team[01:16].seal.aq:
     drill:
       vars:
-        ansible_host: "172.17.{{ team_number|int }}.2"  
+        ansible_host: "172.17.{{ team_number|int }}.2"
         host_octets: "2"
       hosts:
         drill.team[01:16].seal.aq:
     overwatch:
       vars:
-        ansible_host: "172.17.{{ team_number|int }}.3"  
+        ansible_host: "172.17.{{ team_number|int }}.3"
         host_octets: "3"
       hosts:
         overwatch.team[01:16].seal.aq:
     tank:
       vars:
-        ansible_host: "172.17.{{ team_number|int }}.4"  
+        ansible_host: "172.17.{{ team_number|int }}.4"
         host_octets: "4"
       hosts:
         tank.team[01:16].seal.aq:
-    
-    # ----- Groups ------- 
-    
+    redteam:
+      hosts:
+        172.20.1.1[01:10]:
+
+    # ----- Groups -------
+
     # Hosts that are Windows
-    windows: 
+    windows:
       children:
         #management
         choco:
@@ -147,7 +150,7 @@ all:
         sealion:
         drill:
         tank:
-    
+
     # Hosts that are linux
     linux:
       children:
@@ -181,7 +184,7 @@ all:
         drill:
         tank:
         ozone:
-        
+
     # mgmt hosts group
     mgmt_hosts:
       vars:
@@ -198,7 +201,7 @@ all:
         beat:
         deploy:
         store:
-    
+
     # Hosts on the Cloud Network
     cloud:
       vars:
@@ -208,7 +211,7 @@ all:
         tank:
         pipeline:
         overwatch:
-    
+
     lan:
       vars:
         subbnet_ish: "10.{{ team_number|int}}.1."
@@ -236,7 +239,7 @@ all:
         scoring:
         beat:
         store:
-    
+
     # alt network group
     alt_mgmt:
       vars:
@@ -248,7 +251,7 @@ all:
         beat:
         store:
         vpn:
-        
+
     # vpn network group
     vpn_net: # rename to something better
       vars:
@@ -258,4 +261,3 @@ all:
         vpn:
 
     #router is weird
-

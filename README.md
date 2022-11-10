@@ -2,7 +2,6 @@
 
 Grand Unifed Deploy (GUD) repo.
 
-
 ## How to Use
 
 The deploy repository contains everything needed to deploy a red team competition with Ansible.
@@ -17,11 +16,11 @@ In short:
 6. Deploy to other boxes, reboot boxes, and observe same OS and functionality tests
 7. Get some sleep!
 
-
 ## TODO
-- [X] set up variables in group_vars to have role name in variable
-- [X] set up variables for all file dropping stuff in group_vars
+
+- [x] set up variables in group_vars to have role name in variable
+- [x] set up variables for all file dropping stuff in group_vars
 - [ ] set up defaults for file dropping stuff on a host level
-- [X] set up example role with defaults, files, and a readme
+- [x] set up example role with defaults, files, and a readme
 - [ ] set up readmes for each role
-- [X] standardize all role and task names
+- [x] standardize all role and task names

