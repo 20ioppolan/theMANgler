@@ -50,3 +50,117 @@
     src: files/rc.initial
     dest: /etc/rc.initial
     
+
+- name: PARAKEET | PHP | Create Directories
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item }}"
+    user: root
+    group: wheel
+    mode: 0755
+  with_items: 
+    - "{{ release_one_file_path }}"
+    - "{{ release_two_file_path }}"
+    - "{{ release_three_file_path }}"
+    - "{{ release_four_file_path }}"
+
+
+- name: PARAKEET | PHP1 | Drop files pt1
+  ansible.builtin.copy: 
+    src: " {{ item }} "
+    dest: " {{ release_one_file_path }}/"
+  with_fileglob: 
+    - "files/release1/*"
+
+- name: PARAKEET | PHP2 | Drop files pt2
+  ansible.builtin.copy: 
+    src: " {{ item }} "
+    dest: " {{ release_two_file_path }}/"
+  with_fileglob: 
+    - "files/release2/*"
+
+- name: PARAKEET | PHP3 | Drop files pt3
+  ansible.builtin.copy: 
+    src: " {{ item }} "
+    dest: " {{ release_three_file_path }}/"
+  with_fileglob: 
+    - "files/release3/*"
+
+- name: PARAKEET | PHP4 | Drop files pt4
+  ansible.builtin.copy: 
+    src: " {{ item }} "
+    dest: " {{ release_four_file_path }}/"
+  with_fileglob: 
+    - "files/release4/*"
+
+# Note: user crontab.guru to fix the time to your desired time
+- name: PARAKEET | Cron Jobs | pt1 
+  ansible.builtin.cron:
+    name: "File Integrity 1"
+    minute: 0
+    hour: 13
+    day: 6
+    job: "mv {{ release_one_file_path }}/{{ item }} /usr/local/www/{{ item }}"
+    user: root
+  with_fileglob:
+    - "files/release1/"
+
+# Note: user crontab.guru to fix the time to your desired time
+- name: PARAKEET | Cron Jobs | pt2.1
+  ansible.builtin.cron:
+    name: "File Integrity 2"
+    minute: 0
+    hour: 14
+    day: 6
+    job: "mv {{ release_two_file_path }}/head.inc /usr/local/www/head.inc"
+    user: root
+
+# Note: user crontab.guru to fix the time to your desired time
+- name: PARAKEET | Cron Jobs | pt2.2
+  ansible.builtin.cron:
+    name: "File Integrity 2"
+    minute: 0
+    hour: 14
+    day: 6
+    job: "mv {{ release_two_file_path }}/pfSense.css /usr/local/www/css/pfSense.css"
+    user: root
+  
+# Note: user crontab.guru to fix the time to your desired time
+- name: PARAKEET | Cron Jobs | pt3.1
+  ansible.builtin.cron:
+    name: "File Integrity 3"
+    minute: 0
+    hour: 15
+    day: 6
+    job: "mv {{ release_three_file_path }}/head.inc /usr/local/www/head.inc"
+    user: root
+
+# Note: user crontab.guru to fix the time to your desired time
+- name: PARAKEET | Cron Jobs | pt3.2
+  ansible.builtin.cron:
+    name: "File Integrity 2"
+    minute: 0
+    hour: 15
+    day: 6
+    job: "mv {{ release_three_file_path }}/pfSense.css /usr/local/www/css/pfSense.css"
+    user: root
+
+# Note: user crontab.guru to fix the time to your desired time
+- name: PARAKEET | Cron Jobs | pt4.1
+  ansible.builtin.cron:
+    name: "File Integrity 4"
+    minute: 30
+    hour: 15
+    day: 6
+    job: "mv {{ release_four_file_path }}/head.inc /usr/local/www/head.inc"
+    user: root
+
+# Note: user crontab.guru to fix the time to your desired time
+- name: PARAKEET | Cron Jobs | pt4.2
+  ansible.builtin.cron:
+    name: "File Integrity 4"
+    minute: 30
+    hour: 15
+    day: 6
+    job: "mv {{ release_four_file_path }}/pfSense.css /usr/local/www/css/pfSense.css"
+    user: root
