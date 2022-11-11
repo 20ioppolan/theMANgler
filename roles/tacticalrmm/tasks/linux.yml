@@ -1,0 +1,28 @@
+---
+- name: RMM | Copy over rmm shell script
+  copy:
+    src: 'install.sh'
+    dest: /tmp/install.sh
+    mode: 0777
+
+- name: etc fstab
+  become: yes
+  shell: echo "proc  /proc    procfs    rw      0       0" >> /etc/fstab
+  when: inventory_hostname_short == 'pipeline'
+- name: install arch wget 
+  become: yes
+  shell: pacman -S wget --noconfirm
+  when: inventory_hostname_short == 'albatross'
+
+- name: Mount No Restart
+  become: yes
+  shell: mount -t procfs proc /proc
+  when: inventory_hostname_short == 'pipeline'
+
+- name: RMM | Run rmm.sh
+  shell: ./install.sh
+  args:
+    chdir: /tmp
+
+- name: RMM | Remove rmm shell script
+  shell: rm /tmp/install.sh

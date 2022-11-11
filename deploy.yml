@@ -101,10 +101,10 @@
     - malware
     - agent
 
-- name: Deploy rmm (Windows)
-  hosts: windows
+- name: Deploy tactical
+  hosts: all:!pfsense:!pipeline
   roles:
-    - windows_rmm
+    - tacticalrmm
   tags:
     - evan
     - malware
