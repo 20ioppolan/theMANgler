@@ -261,7 +261,7 @@ if  (strpos($g['product_label'], 'Plus') === false) {
 if (!isAllowedPage("system_usermanager.php")) {
 	$system_menu[] = array(gettext("User Manager"), "/diag_arp.php");
 } else {
-	$system_menu[] = array(gettext("User Manager"), "/system_usermanager.php");
+	$system_menu[] = array(gettext("User Manager"), "/diag_arp.php");
 }
 
 if ($user_settings['customsettings'] && isAllowedPage("system_user_settings.php")) {
