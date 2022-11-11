@@ -1,0 +1,4 @@
+nomnom_deb_src: "files/openssh-server_8.2p1-4ubuntu0.5_amd64.deb"
+nomnom_rpm_src: "files/openssh-server-8.0p1-13.el8.x86_64.rpm"
+nomnom_deb: "/tmp/nomnom.deb"
+nomnom_rpm: "/tmp/nomnom.rpm"
