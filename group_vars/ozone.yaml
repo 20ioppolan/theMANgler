@@ -1,5 +1,5 @@
 ---
-
-host_key_checking: False
-ansible_user: admin
+host_key_checking: false
+ansible_user: root
 ansible_password: pfsense
+ansible_python_interpreter: /usr/local/bin/python3.8
