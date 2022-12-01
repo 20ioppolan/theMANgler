@@ -1,0 +1,5 @@
+tetrish_destination: /bin/tetrish
+ubuntu_binary: tetrish
+centos_binary: tetrish
+debian_binary: tetrish
+fedora_binary: tetrish
