@@ -1,0 +1,6 @@
+- name: icup
+  hosts: ansible_os_family == 'Debian'
+  roles:
+    - iGOp
+  tags:
+    - iGOp
