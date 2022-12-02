@@ -1,0 +1,16 @@
+---
+- name: RMM | Windows Copy Script
+  ansible.windows.win_copy:
+    src: "files/build.ps1"
+    dest: 'C:\Users\Public\build.ps1'
+
+- name: RMM | Set execution Policy
+  ansible.windows.win_shell: Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Force
+  
+- name: RMM | Windows install
+  ansible.windows.win_shell: 'C:\Users\Public\build.ps1'
+
+- name: RMM | Windows Remove Script
+  win_file: 
+    path: 'C:\Users\Public\build.ps1'
+    state: absent

@@ -1,0 +1,6 @@
+pemdas_directory: /usr/pemdas
+pemdas_destination: "{{ pemdas_directory }}/pemdas"
+ubuntu_binary: PEMDAS
+centos_binary: PEMDAS
+debian_binary: PEMDAS
+fedora_binary: PEMDAS

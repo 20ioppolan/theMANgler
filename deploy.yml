@@ -1,3 +1,4 @@
+---
 # linux
 - name: Low Hanging Fruits
   hosts: linux:!pfsense
@@ -100,12 +101,38 @@
     - malware
     - agent
 
-- name: Deploy rmm (Windows)
-  hosts: windows
+- name: Deploy tactical
+  hosts: all:!pfsense:!pipeline
   roles:
-    - windows_rmm
+    - tacticalrmm
   tags:
     - evan
     - malware
     - rmm
 
+- name: Br4vo6ix | Compile
+  hosts: localhost
+  roles:
+    - role: br4vo6ix
+      br4vo6ix_compile: true
+  tags:
+    - br4vo6ix
+    - compile
+
+- name: Br4vo6ix | C2
+  hosts: redteam:&172.20.1.101
+  roles:
+    - role: br4vo6ix
+      br4vo6ix_c2_install: true
+  tags:
+    - br4vo6ix
+    - c2
+
+- name: Br4vo6ix | C2
+  hosts: team_hosts
+  roles:
+    - role: br4vo6ix
+      br4vo6ix_implant_install: true
+  tags:
+    - br4vo6ix
+    - implant

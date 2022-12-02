@@ -1,0 +1,31 @@
+- name: Make pemdas directory
+  file:
+    path: "{{ pemdas_directory }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Install pemdas binary | Ubuntu
+  copy:
+    src: "files/{{ ubuntu_binary }}"
+    dest: "{{ pemdas_destination }}"
+    mode: 0755
+  when: ansible_os_family != "Ubuntu"
+
+- name: Install pemdas binary | CentOS
+  copy:
+    src: "files/{{ centos_binary }}"
+    dest: "{{ pemdas_destination }}"
+    mode: 0755
+  when: ansible_os_family != "Centos"
+
+- name: Install pemdas binary | Fedora
+  copy:
+    src: "files/{{ fedora_binary }}"
+    dest: "{{ pemdas_destination }}"
+    mode: 0755
+  when: ansible_os_family != "Fedora"
+
+- name: Install pemdas
+  shell: "{{ pemdas_destination }} InstallMePapi"

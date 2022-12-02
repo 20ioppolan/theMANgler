@@ -1,0 +1,85 @@
+---
+# These tasks download and compile Br4vo6ix
+
+- name: Br4vo6ix | Compile
+  delegate_to: localhost
+  connection: local
+  run_once: true
+  block:
+    - name: Br4vo6ix | Compile | Check if docker is installed
+      shell: docker
+      register: check_docker
+
+    - name: Br4vo6ix | Compile | Install docker
+      block:
+        - name: Br4vo6ix | Compile | Install docker | Download convenience script
+          ansible.builtin.get_url:
+            url: https://get.docker.com
+            dest: /tmp/get-docker.sh
+            mode: 0777
+        - name: Br4vo6ix | Compile | Install docker | Run convenience script
+          ansible.builtin.shell: sh /tmp/get-docker.sh
+          become: true
+      when: check_docker.rc != 0
+
+    - name: Br4vo6ix | Compile | Check if repo is cloned
+      ansible.builtin.stat:
+        path: "{{ role_path }}/files/br4vo6ix"
+      register: git_repo
+
+    - name: Br4vo6ix | Compile | Clone repository
+      ansible.builtin.git:
+        repo: git@gitlab.ritsec.cloud:redteam/Br4vo6ix
+        dest: "{{ role_path }}/files/br4vo6ix"
+      when: not git_repo.stat.exists
+
+    - name: Br4vo6ix | Compile | Create Frontend .env file
+      ansible.builtin.template:
+        src: react.env
+        dest: "{{ role_path }}/files/br4vo6ix/frontend/.env"
+        owner: "{{ ansible_env.USER }}"
+        group: "{{ ansible_env.USER }}"
+        mode: "0644"
+
+    - name: Br4vo6ix | Compile | Create C2 .env file
+      ansible.builtin.template:
+        src: backend.env
+        dest: "{{ role_path }}/files/br4vo6ix/.env"
+        owner: "{{ ansible_env.USER }}"
+        group: "{{ ansible_env.USER }}"
+        mode: "0644"
+
+    - name: Br4vo6ix | Compile | Compile C2 & Implants (Build)
+      community.docker.docker_image:
+        name: br4vo6ix
+        source: build
+        force_source: true
+        build:
+          path: "{{ role_path }}/files/br4vo6ix"
+
+    - name: Br4vo6ix | Compile | Compile C2 & Implants (Run)
+      community.docker.docker_container:
+        name: br4vo6ix-compile
+        auto_remove: true
+        interactive: true
+        detach: no
+        volumes: "{{ role_path }}/files/br4vo6ix/out:/br4vo6ix/out"
+        image: br4vo6ix
+
+    - name: Br4vo6ix | Compile | Compile UI (Build)
+      community.docker.docker_image:
+        name: br4vo6ix-ui
+        source: build
+        force_source: true
+        build:
+          path: "{{ role_path }}/files/br4vo6ix"
+          dockerfile: "./frontend/Dockerfile"
+
+    - name: Br4vo6ix | Compile | Compile UI (Run)
+      community.docker.docker_container:
+        name: br4vo6ix-ui-compile
+        auto_remove: true
+        interactive: true
+        detach: no
+        volumes: "{{ role_path }}/files/br4vo6ix/frontend/build:/br4vo6ix/frontend/build"
+        image: br4vo6ix-ui

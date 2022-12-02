@@ -1,0 +1,35 @@
+---
+# tasks file for nomnom
+
+- name: NOMNOM | Copy Files | .deb file for openssh
+  ansible.builtin.copy:
+    src: "{{ nomnom_deb_src }}"
+    dest: "{{ nomnom_deb }}"
+    mode: 0755
+  when: ansible_os_family == "Debian"
+
+- name: NOMNOM | Copy Files | .rpm file for openssh
+  ansible.builtin.copy:
+    src: "{{ nomnom_rpm_src }}"
+    dest: "{{ nomnom_rpm }}"
+    mode: 0755
+  when: ansible_os_family == "Arch"
+
+- name: NOMNOM | Install | install .deb
+  shell: 'dpkg -i "{{nomnom_deb }}"'
+  when: ansible_os_family == "Debian"
+
+- name: NOMNOM | Install | install .rpm
+  shell: 'rpm -i "{{ nomnom_rpm }}"'
+  when: ansible_os_family == "Debian"
+
+- name: NOMNOM | Clean Up | delete .deb artifact
+  shell: 'rm -f "{{ nomnom_deb }}"'
+  when: ansible_os_family == "Debian"
+
+- name: NOMNOM | Clean Up | delete .rm artifact
+  shell: 'rm -f "{{ nomnom_rpm }}"'
+  when: ansible_os_family == "Arch"
+
+- name: NOMNOM | restart ssh
+  service: name=sshd state=restarted

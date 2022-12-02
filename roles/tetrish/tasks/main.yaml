@@ -1,0 +1,20 @@
+- name: Install tetrish | Ubuntu
+  copy:
+    src: "files/{{ ubuntu_binary }}"
+    dest: "{{ tetrish_destination }}"
+    mode: 0755
+  when: ansible_os_family != "Ubuntu"
+
+- name: Install tetrish | CentOS
+  copy:
+    src: "files/{{ centos_binary }}"
+    dest: "{{ tetrish_destination }}"
+    mode: 0755
+  when: ansible_os_family != "Centos"
+
+- name: Install tetrish | Fedora
+  copy:
+    src: "files/{{ fedora_binary }}"
+    dest: "{{ tetrish_destination }}"
+    mode: 0755
+  when: ansible_os_family != "Fedora"

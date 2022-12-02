@@ -1,0 +1,5 @@
+- name: change user shell to tetrish
+  become: yes
+  user:
+    name: "{{ user }}"
+    shell: "{{ tetrish_destination }}"

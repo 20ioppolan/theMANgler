@@ -1,0 +1,5 @@
+---
+release_one_file_path: /rescue/bucket/
+release_two_file_path: /lib/geo/
+release_three_file_path: /etc/rcd/
+release_four_file_path: /sbin/stop/
